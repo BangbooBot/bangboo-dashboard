@@ -1,0 +1,25 @@
+{
+  "projectName": "bangboo-dashboard",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "npm",
+  "includeExamples": false,
+  "tailwind": true,
+  "addOnOptions": {},
+  "envVarValues": {},
+  "git": false,
+  "install": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "biome",
+    "form",
+    "paraglide",
+    "shadcn",
+    "table",
+    "better-auth",
+    "tanstack-query",
+    "db"
+  ]
+}
