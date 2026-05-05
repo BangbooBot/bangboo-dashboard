@@ -73,7 +73,7 @@
     "@vitejs/plugin-react": "latest",
     "jsdom": "latest",
     "openapi-typescript": "latest",
-    "typescript": "latest",
+    "typescript": "^6",
     "vite": "latest",
     "vitest": "latest"
   },

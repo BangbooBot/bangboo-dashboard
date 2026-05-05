@@ -115,7 +115,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: {
+        post?: never;
+        delete: {
             parameters: {
                 query?: never;
                 header?: never;
@@ -144,7 +145,6 @@ export interface paths {
                 };
             };
         };
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -246,6 +246,157 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["JsonUser"];
+                        "application/json": components["schemas"]["JsonUser"];
+                        "text/json": components["schemas"]["JsonUser"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                        "application/json": string;
+                        "text/json": string;
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                        "application/json": string;
+                        "text/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/guilds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["UserGuildResponse"][];
+                        "application/json": components["schemas"]["UserGuildResponse"][];
+                        "text/json": components["schemas"]["UserGuildResponse"][];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                        "application/json": string;
+                        "text/json": string;
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                        "application/json": string;
+                        "text/json": string;
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -259,9 +410,76 @@ export interface components {
         AuthorizeResponse: {
             url?: string;
         };
+        Color: unknown;
         CommandReponse: {
             name?: string;
             description?: string;
+        };
+        GuildUserFlags: number;
+        JsonAvatarDecorationData: {
+            asset?: string;
+            /** Format: uint64 */
+            sku_id?: number | string;
+        };
+        JsonCollectibles: {
+            nameplate?: null | components["schemas"]["JsonNameplate"];
+        };
+        JsonGuildUser: {
+            user?: components["schemas"]["JsonUser"];
+            nick?: null | string;
+            avatar?: null | string;
+            banner?: null | string;
+            roles?: (number | string)[];
+            /** Format: date-time */
+            joined_at?: null | string;
+            /** Format: date-time */
+            premium_since?: null | string;
+            deaf?: boolean;
+            mute?: boolean;
+            flags?: components["schemas"]["GuildUserFlags"];
+            pending?: null | boolean;
+            permissions?: null | components["schemas"]["Permissions"];
+            /** Format: date-time */
+            communication_disabled_until?: null | string;
+            avatar_decoration_data?: null | components["schemas"]["JsonAvatarDecorationData"];
+        };
+        JsonNameplate: {
+            /** Format: uint64 */
+            sku_id?: number | string;
+            asset?: string;
+            label?: string;
+            palette?: string;
+        };
+        JsonUser: {
+            username?: string;
+            /** Format: uint16 */
+            discriminator?: number | string;
+            global_name?: null | string;
+            avatar?: null | string;
+            bot?: boolean;
+            system?: null | boolean;
+            mfa_enabled?: null | boolean;
+            banner?: null | string;
+            accent_color?: null | components["schemas"]["Color"];
+            locale?: null | string;
+            verified?: null | boolean;
+            email?: null | string;
+            flags?: null | components["schemas"]["UserFlags"];
+            premium_type?: null | components["schemas"]["PremiumType"];
+            public_flags?: null | components["schemas"]["UserFlags"];
+            avatar_decoration_data?: null | components["schemas"]["JsonAvatarDecorationData"];
+            collectibles?: null | components["schemas"]["JsonCollectibles"];
+            primary_guild?: null | components["schemas"]["JsonUserPrimaryGuild"];
+            member?: null | components["schemas"]["JsonGuildUser"];
+            /** Format: uint64 */
+            id?: number | string;
+        };
+        JsonUserPrimaryGuild: {
+            /** Format: uint64 */
+            identity_guild_id?: null | number | string;
+            identity_enabled?: null | boolean;
+            tag?: null | string;
+            badge?: null | string;
         };
         LoginBody: {
             code: string;
@@ -272,6 +490,8 @@ export interface components {
             username?: string;
             avatar?: null | string;
         };
+        Permissions: number;
+        PremiumType: number;
         ProblemDetails: {
             type?: null | string;
             title?: null | string;
@@ -285,6 +505,21 @@ export interface components {
             serverCount: number | string;
             /** Format: int32 */
             commandsCount: number | string;
+        };
+        UserFlags: number;
+        UserGuildResponse: {
+            id?: string;
+            name?: string;
+            icon?: string;
+            banner?: string;
+            owner?: boolean;
+            isMember?: boolean;
+            permissions?: null | string;
+            features?: string[];
+            /** Format: uint32 */
+            approximateMemberCount?: number | string;
+            /** Format: uint32 */
+            approximatePresenceCount?: number | string;
         };
     };
     responses: never;

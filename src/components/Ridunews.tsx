@@ -1,12 +1,14 @@
 import { useApi } from "#/lib/openapi";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import {
 	Bell,
 	Eye,
 	Gift,
 	Languages,
-	ShoppingCartIcon,
+	Loader2,
 	UserRound,
+	X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FaDiscord, FaGithub } from "react-icons/fa";
@@ -50,27 +52,23 @@ const socialLinks = [
 		href: "https://github.com/BangbooBot",
 		icon: <FaGithub className="text-[#E5D2C5]" size={20} />,
 	},
-]
-
-const botStatus = {
-	serverCount: 0,
-	commandCount: 0,
-};
+];
 
 const api = useApi();
 
 export function Ridunews() {
-	const [status, setStatus] = useState(botStatus);
-	useEffect(() => {
-		api.GET("/status").then((res) => {
-			if (res.data) {
-				setStatus({
-					serverCount: res.data.serverCount as number,
-					commandCount: res.data.commandsCount as number,
-				});
+
+	const { data, isLoading, isError } = useQuery({
+		queryKey: ["status"],
+		queryFn: async () => {
+			const status = await api.GET("/status");
+			if (status.error) {
+				throw status.error;
 			}
-		});
-	}, []);
+
+			return status.data;
+		},
+	});
 
 	return (
 		<div className="max-w-xl flex flex-col gap-y-2 p-2 rounded-md bg-[#E5D2C5] border border-white/10 shadow-lg shadow-white/10">
@@ -89,7 +87,7 @@ export function Ridunews() {
 					<div className="w-full flex justify-center">
 						<div className="w-fit flex flex-col justify-center items-center rounded-sm border-4 border-[#E5D2C5]">
 							<img
-								src="/img/brand.png"
+								src="/img/optimized/brand.png"
 								alt="Bangboo Logo"
 								width={250}
 								height={250}
@@ -107,7 +105,8 @@ export function Ridunews() {
 							SMALL BODY, BIG HELPER!
 						</h1>
 						<p className="text-base font-medium text-justify text-[#E5D2C5]">
-							All servers need an autonomous bunny to guide them through the darkest corners.
+							All servers need an autonomous bunny to guide them through the
+							darkest corners.
 						</p>
 					</div>
 				</div>
@@ -119,7 +118,7 @@ export function Ridunews() {
 						{features.map((feature, index) => (
 							<div
 								key={index}
-								className="flex flex-col items-center bg-[#E5D2C5] px-4 py-2 rounded-sm min-w-[110px] flex-shrink-0"
+								className="flex flex-col items-center bg-[#E5D2C5] px-4 py-2 rounded-sm min-w-[110px] shrink-0"
 							>
 								<span className="text-[#2B312B]">{feature.icon}</span>
 								<span className="text-[#2B312B] font-medium text-sm">
@@ -132,13 +131,29 @@ export function Ridunews() {
 					<div className="flex flex-wrap justify-center items-center gap-8 pt-5 w-full mt-2">
 						<div className="flex flex-col items-center gap-y-2">
 							<div className="min-w-[80px] h-10 px-3 rounded-sm flex justify-center items-center bg-[#E5D2C5] text-base font-extrabold text-[#2B312B] shadow-inner">
-								{status.serverCount}+
+								{isLoading ? (
+									<Loader2 className="animate-spin" size={20} />
+								) : isError ? (
+									<X className="animate-pulse" size={20} />
+								) : data ? (
+									data.serverCount
+								) : (
+									"♾️"
+								)}
 							</div>
 							<h5 className="text-sm font-bold text-[#E5D2C5]">Guilds</h5>
 						</div>
 						<div className="flex flex-col items-center gap-y-2">
 							<div className="min-w-[80px] h-10 px-3 rounded-sm flex justify-center items-center bg-[#E5D2C5] text-base font-extrabold text-[#2B312B] shadow-inner">
-								{status.commandCount}+
+								{isLoading ? (
+									<Loader2 className="animate-spin" size={20} />
+								) : isError ? (
+									<X className="animate-pulse" size={20} />
+								) : data ? (
+									data.commandsCount
+								) : (
+									"♾️"
+								)}
 							</div>
 							<h5 className="text-sm font-bold text-[#E5D2C5]">Commands</h5>
 						</div>

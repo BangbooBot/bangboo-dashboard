@@ -1,21 +1,6 @@
-import {
-	Link,
-	useNavigate,
-	useRouteContext,
-	useRouter,
-} from "@tanstack/react-router";
-import {
-	Activity,
-	Home,
-	LayoutDashboard,
-	LogIn,
-	LogOut,
-	Menu,
-	Terminal,
-	User,
-	X,
-} from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
+import { LogIn, LogOut, User } from "lucide-react";
+import { useCallback, useRef } from "react";
 import { toast } from "sonner";
 import { useApi } from "#/lib/openapi";
 import { Button } from "@/components/ui/button";
@@ -34,27 +19,6 @@ type NavLink = {
 	to: string;
 };
 
-const navlinkItems: NavLink[] = [
-	{
-		id: "home",
-		label: "Home",
-		icon: <Home size={16} />,
-		to: "/",
-	},
-	{
-		id: "commands",
-		label: "Commands",
-		icon: <Terminal size={16} />,
-		to: "/commands",
-	},
-	{
-		id: "status",
-		label: "Status",
-		icon: <Activity size={16} />,
-		to: "/status",
-	},
-];
-
 type DropdownItem = {
 	id: string;
 	type: "button" | "separator" | "link" | "destructive";
@@ -66,24 +30,12 @@ type DropdownItem = {
 
 const api = useApi();
 
-export function AppNavbar() {
+export function DashboardNavbar() {
 	const navigate = useNavigate();
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { sessionInfo, isAuthenticated } = useRouteContext({
 		from: "__root__",
 	});
 	const dropdownItems = useRef<DropdownItem[]>([
-		{
-			id: "dashboard",
-			type: "link",
-			label: "Dashboard",
-			icon: <LayoutDashboard size={18} />,
-			to: "/dashboard",
-		},
-		{
-			id: "separator",
-			type: "separator",
-		},
 		{
 			id: "logout",
 			type: "destructive",
@@ -129,24 +81,7 @@ export function AppNavbar() {
 					</Link>
 				</div>
 
-				<div className="hidden md:flex gap-2">
-					{navlinkItems.map((link) => (
-						<Link
-							key={link.id}
-							to={link.to}
-							className={
-								"flex gap-x-2 items-center font-medium text-white px-3 py-1 rounded-md hover:bg-white/10"
-							}
-							activeProps={{
-								className:
-									"text-yellow-400 bg-white/10 border-b-1 border-amber-400/40",
-							}}
-						>
-							{link.icon}
-							<span>{link.label}</span>
-						</Link>
-					))}
-				</div>
+				<div />
 
 				<div className="flex w-40 gap-x-3 items-center justify-end">
 					{isAuthenticated && sessionInfo ? (
@@ -221,44 +156,8 @@ export function AppNavbar() {
 							<LogIn className="text-white" />
 						</Button>
 					)}
-
-					<Button
-						variant="outline"
-						size={"icon"}
-						onClick={() => setIsMenuOpen(!isMenuOpen)}
-						className="md:hidden rounded-full"
-					>
-						{isMenuOpen ? (
-							<X className="text-white" />
-						) : (
-							<Menu className="text-white" />
-						)}
-					</Button>
 				</div>
 			</nav>
-
-			{/* Mobile menu */}
-			<div
-				className={`md:hidden absolute top-full left-0 w-full bg-neutral-900 px-4 flex flex-col gap-y-1 items-center overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "h-32 py-2 border border-white/10" : "h-0 py-0 pointer-events-none"}`}
-			>
-				{navlinkItems.map((link) => (
-					<Link
-						key={link.label}
-						to={link.to}
-						onClick={() => setIsMenuOpen(false)}
-						className={
-							"w-full flex gap-x-2 items-center font-medium text-white bg-white/5 px-3 py-1 rounded-md hover:bg-white/10"
-						}
-						activeProps={{
-							className:
-								"text-yellow-400 bg-white/10 border-b-1 border-amber-400/40",
-						}}
-					>
-						{link.icon}
-						<span>{link.label}</span>
-					</Link>
-				))}
-			</div>
 		</header>
 	);
 }

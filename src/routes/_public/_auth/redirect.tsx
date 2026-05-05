@@ -34,7 +34,7 @@ function RouteComponent() {
 	const queryClient = useQueryClient();
 
 	const { status, isLoading, error } = useQuery({
-		queryKey: ["discord-auth", code],
+		queryKey: ["redirect-auth", code],
 		queryFn: async () => {
 			const res = await api.POST("/auth/login", { body: { code } });
 			if (res.error || !res.data) {
@@ -62,7 +62,7 @@ function RouteComponent() {
 			await router.invalidate();
 
 			queryClient.invalidateQueries({
-				queryKey: ["discord-auth", code],
+				queryKey: ["redirect-auth", code],
 			});
 
 			toast.success(`👋 Welcome ${res.data.username}!`, {
