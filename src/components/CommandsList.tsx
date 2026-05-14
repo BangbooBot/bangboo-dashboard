@@ -17,7 +17,7 @@ export function CommandsListSearch({
 	}, [searchText, onQuery]);
 
 	return (
-		<section className="flex flex-col gap-y-4 w-full p-4 border border-white/10 shadow-md shadow-white/10 rounded-lg">
+		<section className="flex flex-col gap-y-4 w-full p-4 border bg-black/50 border-yellow-400/20 shadow-md shadow-yellow-500/20 rounded-lg">
 			<div className="flex flex-col gap-2">
 				<h1 className="sm:text-3xl text-2xl font-bold tracking-tight text-white flex items-center gap-3">
 					<Terminal className="text-amber-400 animate-pulse" />
@@ -49,7 +49,7 @@ export function CommandsList({
 }) {
 	return (
 		<section className="flex flex-col gap-y-2 w-full">
-			<Card className="bg-neutral-900/50 border-neutral-800 backdrop-blur-sm">
+			<Card className="bg-black/40 shadow-md shadow-yellow-800/20">
 				<CardContent className="p-0">
 					<Accordion className="w-full">
 						{filteredCommands.length > 0 ? (
@@ -72,7 +72,7 @@ export function CommandsList({
 										</div>
 									</AccordionTrigger>
 									<AccordionContent className="text-neutral-400 pb-4 pt-0">
-										<div className="bg-neutral-950/50 rounded-lg p-4 border border-neutral-800/50 mt-2">
+										<div className="bg-neutral-950/50 rounded-lg p-4 border border-neutral-800 mt-2">
 											<p className="text-sm leading-relaxed">
 												{command.description}
 											</p>

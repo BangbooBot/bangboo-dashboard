@@ -17,7 +17,7 @@ export type Guild = {
 
 export function GuildCard({ guild }: { guild: Guild }) {
 	return (
-		<Card className="w-full max-w-78 shadow-lg shadow-yellow-300/10">
+		<Card className="w-full max-w-78 bg-black/50 border border-yellow-600/15 shadow-md shadow-yellow-600/10">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-x-3 min-w-0">
 					<div>
@@ -40,8 +40,8 @@ export function GuildCard({ guild }: { guild: Guild }) {
                     </div>
 				</CardTitle>
 			</CardHeader>
-			<CardFooter className="w-full">
-				<Button className="w-full cursor-pointer font-semibold text-lg text-black" size="lg">Invite</Button>
+			<CardFooter className="w-full bg-black/50">
+				<Button className="w-full cursor-pointer font-semibold text-lg bg-yellow-600 hover:bg-yellow-500 text-black" size="lg">Invite</Button>
 			</CardFooter>
 		</Card>
 	);

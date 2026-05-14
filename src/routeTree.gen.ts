@@ -14,10 +14,13 @@ import { Route as PrivateRouteRouteImport } from './routes/_private/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicStatusRouteImport } from './routes/_public/status'
 import { Route as PublicCommandsRouteImport } from './routes/_public/commands'
-import { Route as PrivateDashboardIndexRouteImport } from './routes/_private/dashboard/index'
+import { Route as PrivateDashboardRouteRouteImport } from './routes/_private/dashboard/route'
+import { Route as PrivateGuildRouteRouteImport } from './routes/_private/_guild/route'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as PublicAuthRedirectRouteImport } from './routes/_public/_auth/redirect'
 import { Route as PublicAuthLogoutRouteImport } from './routes/_public/_auth/logout'
+import { Route as PrivateDashboardOverviewRouteImport } from './routes/_private/dashboard/overview'
+import { Route as PrivateGuildGuildRouteImport } from './routes/_private/_guild/guild'
 
 const PublicRouteRoute = PublicRouteRouteImport.update({
   id: '/_public',
@@ -42,9 +45,13 @@ const PublicCommandsRoute = PublicCommandsRouteImport.update({
   path: '/commands',
   getParentRoute: () => PublicRouteRoute,
 } as any)
-const PrivateDashboardIndexRoute = PrivateDashboardIndexRouteImport.update({
-  id: '/dashboard/',
-  path: '/dashboard/',
+const PrivateDashboardRouteRoute = PrivateDashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const PrivateGuildRouteRoute = PrivateGuildRouteRouteImport.update({
+  id: '/_guild',
   getParentRoute: () => PrivateRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -62,67 +69,92 @@ const PublicAuthLogoutRoute = PublicAuthLogoutRouteImport.update({
   path: '/logout',
   getParentRoute: () => PublicRouteRoute,
 } as any)
+const PrivateDashboardOverviewRoute =
+  PrivateDashboardOverviewRouteImport.update({
+    id: '/overview',
+    path: '/overview',
+    getParentRoute: () => PrivateDashboardRouteRoute,
+  } as any)
+const PrivateGuildGuildRoute = PrivateGuildGuildRouteImport.update({
+  id: '/guild',
+  path: '/guild',
+  getParentRoute: () => PrivateGuildRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
+  '/dashboard': typeof PrivateDashboardRouteRouteWithChildren
   '/commands': typeof PublicCommandsRoute
   '/status': typeof PublicStatusRoute
+  '/guild': typeof PrivateGuildGuildRoute
+  '/dashboard/overview': typeof PrivateDashboardOverviewRoute
   '/logout': typeof PublicAuthLogoutRoute
   '/redirect': typeof PublicAuthRedirectRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/dashboard/': typeof PrivateDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
+  '/dashboard': typeof PrivateDashboardRouteRouteWithChildren
   '/commands': typeof PublicCommandsRoute
   '/status': typeof PublicStatusRoute
+  '/guild': typeof PrivateGuildGuildRoute
+  '/dashboard/overview': typeof PrivateDashboardOverviewRoute
   '/logout': typeof PublicAuthLogoutRoute
   '/redirect': typeof PublicAuthRedirectRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/dashboard': typeof PrivateDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_private': typeof PrivateRouteRouteWithChildren
   '/_public': typeof PublicRouteRouteWithChildren
+  '/_private/_guild': typeof PrivateGuildRouteRouteWithChildren
+  '/_private/dashboard': typeof PrivateDashboardRouteRouteWithChildren
   '/_public/commands': typeof PublicCommandsRoute
   '/_public/status': typeof PublicStatusRoute
   '/_public/': typeof PublicIndexRoute
+  '/_private/_guild/guild': typeof PrivateGuildGuildRoute
+  '/_private/dashboard/overview': typeof PrivateDashboardOverviewRoute
   '/_public/_auth/logout': typeof PublicAuthLogoutRoute
   '/_public/_auth/redirect': typeof PublicAuthRedirectRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/_private/dashboard/': typeof PrivateDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dashboard'
     | '/commands'
     | '/status'
+    | '/guild'
+    | '/dashboard/overview'
     | '/logout'
     | '/redirect'
     | '/api/auth/$'
-    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard'
     | '/commands'
     | '/status'
+    | '/guild'
+    | '/dashboard/overview'
     | '/logout'
     | '/redirect'
     | '/api/auth/$'
-    | '/dashboard'
   id:
     | '__root__'
     | '/_private'
     | '/_public'
+    | '/_private/_guild'
+    | '/_private/dashboard'
     | '/_public/commands'
     | '/_public/status'
     | '/_public/'
+    | '/_private/_guild/guild'
+    | '/_private/dashboard/overview'
     | '/_public/_auth/logout'
     | '/_public/_auth/redirect'
     | '/api/auth/$'
-    | '/_private/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -168,11 +200,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicCommandsRouteImport
       parentRoute: typeof PublicRouteRoute
     }
-    '/_private/dashboard/': {
-      id: '/_private/dashboard/'
+    '/_private/dashboard': {
+      id: '/_private/dashboard'
       path: '/dashboard'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof PrivateDashboardIndexRouteImport
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof PrivateDashboardRouteRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/_guild': {
+      id: '/_private/_guild'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PrivateGuildRouteRouteImport
       parentRoute: typeof PrivateRouteRoute
     }
     '/api/auth/$': {
@@ -196,15 +235,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthLogoutRouteImport
       parentRoute: typeof PublicRouteRoute
     }
+    '/_private/dashboard/overview': {
+      id: '/_private/dashboard/overview'
+      path: '/overview'
+      fullPath: '/dashboard/overview'
+      preLoaderRoute: typeof PrivateDashboardOverviewRouteImport
+      parentRoute: typeof PrivateDashboardRouteRoute
+    }
+    '/_private/_guild/guild': {
+      id: '/_private/_guild/guild'
+      path: '/guild'
+      fullPath: '/guild'
+      preLoaderRoute: typeof PrivateGuildGuildRouteImport
+      parentRoute: typeof PrivateGuildRouteRoute
+    }
   }
 }
 
+interface PrivateGuildRouteRouteChildren {
+  PrivateGuildGuildRoute: typeof PrivateGuildGuildRoute
+}
+
+const PrivateGuildRouteRouteChildren: PrivateGuildRouteRouteChildren = {
+  PrivateGuildGuildRoute: PrivateGuildGuildRoute,
+}
+
+const PrivateGuildRouteRouteWithChildren =
+  PrivateGuildRouteRoute._addFileChildren(PrivateGuildRouteRouteChildren)
+
+interface PrivateDashboardRouteRouteChildren {
+  PrivateDashboardOverviewRoute: typeof PrivateDashboardOverviewRoute
+}
+
+const PrivateDashboardRouteRouteChildren: PrivateDashboardRouteRouteChildren = {
+  PrivateDashboardOverviewRoute: PrivateDashboardOverviewRoute,
+}
+
+const PrivateDashboardRouteRouteWithChildren =
+  PrivateDashboardRouteRoute._addFileChildren(
+    PrivateDashboardRouteRouteChildren,
+  )
+
 interface PrivateRouteRouteChildren {
-  PrivateDashboardIndexRoute: typeof PrivateDashboardIndexRoute
+  PrivateGuildRouteRoute: typeof PrivateGuildRouteRouteWithChildren
+  PrivateDashboardRouteRoute: typeof PrivateDashboardRouteRouteWithChildren
 }
 
 const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
-  PrivateDashboardIndexRoute: PrivateDashboardIndexRoute,
+  PrivateGuildRouteRoute: PrivateGuildRouteRouteWithChildren,
+  PrivateDashboardRouteRoute: PrivateDashboardRouteRouteWithChildren,
 }
 
 const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(

@@ -174,7 +174,6 @@ body,
 }
 
 body {
-  @apply bg-neutral-900; 
   margin: 0;
   color: var(--sea-ink);
   font-family: var(--font-sans);
@@ -307,11 +306,15 @@ a {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
+    /*
     background-color: var(--background);
     color: var(--foreground);
-    @apply bg-background text-foreground;
+    @apply bg-linear-to-br from-background via-yellow-900 to-neutral-950 text-foreground; */
+    @apply bg-linear-to-br from-[color-mix(in_oklab,var(--color-yellow-500),black_75%)] to-[color-mix(in_oklab,var(--color-black),white_5%)];
   }
+
   html {
     @apply font-sans;
   }

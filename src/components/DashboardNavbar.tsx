@@ -66,7 +66,7 @@ export function DashboardNavbar() {
 	}, []);
 
 	return (
-		<header className="sticky top-0 z-50 w-full bg-neutral-900/90 shadow-md shadow-white/10 backdrop-blur-sm p-3 flex justify-center">
+		<header className="sticky top-0 z-50 w-full bg-linear-to-tr from-[color-mix(in_oklab,var(--color-yellow-800),black_60%)] to-black shadow-lg shadow-yellow-600/10 backdrop-blur-sm p-3 flex justify-center">
 			<nav className="w-full max-w-5xl flex justify-between items-center">
 				<div className="flex w-40 gap-x-2 items-center">
 					<Link to="/" className="flex gap-x-2 items-center">

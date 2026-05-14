@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createFileRoute,
@@ -32,6 +33,13 @@ function RouteComponent() {
 	const router = useRouter();
 	const api = useApi();
 	const queryClient = useQueryClient();
+
+	useEffect(() => {
+		if (window.opener && window.opener !== window) {
+			window.opener.location.href = window.location.href;
+			window.close();
+		}
+	}, []);
 
 	const { status, isLoading, error } = useQuery({
 		queryKey: ["redirect-auth", code],

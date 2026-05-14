@@ -2,7 +2,6 @@ import {
 	Link,
 	useNavigate,
 	useRouteContext,
-	useRouter,
 } from "@tanstack/react-router";
 import {
 	Activity,
@@ -15,7 +14,7 @@ import {
 	User,
 	X,
 } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import { useApi } from "#/lib/openapi";
 import { Button } from "@/components/ui/button";
@@ -64,21 +63,25 @@ type DropdownItem = {
 	onClick?: () => void;
 };
 
+
+
 const api = useApi();
 
 export function AppNavbar() {
 	const navigate = useNavigate();
+	const [isFetching, setIsFetching] = useState(false);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { sessionInfo, isAuthenticated } = useRouteContext({
 		from: "__root__",
 	});
-	const dropdownItems = useRef<DropdownItem[]>([
+
+	const dropdownItems: DropdownItem[] = [
 		{
 			id: "dashboard",
 			type: "link",
 			label: "Dashboard",
 			icon: <LayoutDashboard size={18} />,
-			to: "/dashboard",
+			to: "/guild",
 		},
 		{
 			id: "separator",
@@ -93,28 +96,43 @@ export function AppNavbar() {
 				navigate({ to: "/logout" });
 			},
 		},
-	]);
+	];
 
 	const authorize = useCallback(async () => {
 		if (isAuthenticated) {
 			return;
 		}
 
+		setIsFetching(true);
+
 		api
 			.GET("/auth/authorize")
 			.then((res) => {
 				if (res.data?.url) {
-					window.location.href = res.data.url;
+					const width = 500;
+					const height = 600;
+					const left = window.screenX + (window.outerWidth - width) / 2;
+					const top = window.screenY + (window.outerHeight - height) / 2;
+
+					window.open(
+						res.data.url,
+						"discord_auth",
+						`width=${width},height=${height},left=${left},top=${top}`
+					);
 				}
+				
 			})
 			.catch((err) => {
 				console.log(err);
 				toast.error("Failed to authenticate");
+			})
+			.finally(() => {
+				setIsFetching(false);
 			});
 	}, []);
 
 	return (
-		<header className="sticky top-0 z-50 w-full bg-neutral-900/90 shadow-md shadow-white/10 backdrop-blur-sm p-3 flex justify-center">
+		<header className="sticky top-0 z-50 w-full bg-linear-to-tr from-[color-mix(in_oklab,var(--color-yellow-800),black_60%)] to-black shadow-lg shadow-yellow-600/10 backdrop-blur-sm p-3 flex justify-center">
 			<nav className="w-full max-w-5xl flex justify-between items-center">
 				<div className="flex w-40 gap-x-2 items-center">
 					<Link to="/" className="flex gap-x-2 items-center">
@@ -173,7 +191,7 @@ export function AppNavbar() {
 								Open
 							</DropdownMenuTrigger>
 							<DropdownMenuContent>
-								{dropdownItems.current.map((item) => {
+								{dropdownItems.map((item) => {
 									if (item.type === "link") {
 										return (
 											<DropdownMenuItem key={item.id}>
@@ -217,6 +235,7 @@ export function AppNavbar() {
 							size={"icon"}
 							onClick={() => authorize()}
 							className="rounded-full"
+							disabled={isFetching}
 						>
 							<LogIn className="text-white" />
 						</Button>
@@ -239,7 +258,7 @@ export function AppNavbar() {
 
 			{/* Mobile menu */}
 			<div
-				className={`md:hidden absolute top-full left-0 w-full bg-neutral-900 px-4 flex flex-col gap-y-1 items-center overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "h-32 py-2 border border-white/10" : "h-0 py-0 pointer-events-none"}`}
+				className={`md:hidden absolute top-full left-0 w-full bg-linear-to-br from-[color-mix(in_oklab,var(--color-yellow-800),black_60%)] to-black px-4 flex flex-col gap-y-1 items-center overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "h-32 py-2 border border-white/10" : "h-0 py-0 pointer-events-none"}`}
 			>
 				{navlinkItems.map((link) => (
 					<Link

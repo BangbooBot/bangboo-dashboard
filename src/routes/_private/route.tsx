@@ -15,9 +15,7 @@ export const Route = createFileRoute("/_private")({
 function RouteComponent() {
 	return (
 		<>
-			<DashboardNavbar />
 			<Outlet />
-            <AppFooter />
 		</>
 	);
 }

@@ -3,7 +3,7 @@ import { useApi } from "#/lib/openapi";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_private/dashboard/")({
+export const Route = createFileRoute("/_private/_guild/guild")({
 	component: RouteComponent,
 });
 
