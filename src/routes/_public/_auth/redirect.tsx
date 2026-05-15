@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
 	createFileRoute,
@@ -32,72 +32,83 @@ function RouteComponent() {
 	const navigate = useNavigate();
 	const router = useRouter();
 	const api = useApi();
-	const queryClient = useQueryClient();
 
 	useEffect(() => {
 		if (window.opener && window.opener !== window) {
 			window.opener.location.href = window.location.href;
 			window.close();
+			return;
 		}
-	}, []);
+		api
+			.POST("/auth/login", { body: { code } })
+			.then(async (res) => {
+				if (!res.data) {
+					toast.error("Authentication failed", {
+						duration: 1000,
+						onAutoClose: () => {
+							navigate({ to: "/" });
+						},
+						position: "bottom-center",
+						className: "bg-red-400",
+						style: {
+							color: "white",
+							backgroundColor: "red",
+							borderColor: "red",
+						},
+					});
+					return;
+				}
+				const sessionData = {
+					expire_in: res.data.expiresIn as string,
+					avatar: res.data.avatar as string,
+					username: res.data.username as string,
+				} satisfies z.infer<typeof sessionSchema>;
 
-	const { status, isLoading, error } = useQuery({
-		queryKey: ["redirect-auth", code],
-		queryFn: async () => {
-			const res = await api.POST("/auth/login", { body: { code } });
-			if (res.error || !res.data) {
+				await Promise.all([
+					setSessionServerFn({ data: sessionData }),
+					setIsAuthenticated({ data: true }),
+				]);
+
+				await router.invalidate();
+
+				toast.success(`👋 Welcome ${res.data.username}!`, {
+					duration: 1000,
+					onAutoClose: () => {
+						navigate({ to: "/" });
+					},
+					position: "bottom-center",
+					className: "bg-green-400",
+					style: {
+						color: "white",
+						backgroundColor: "green",
+						borderColor: "green",
+					},
+				});
+			})
+			.catch((error) => {
+				console.error(error);
 				toast.error("Authentication failed", {
 					duration: 1000,
 					onAutoClose: () => {
 						navigate({ to: "/" });
 					},
 					position: "bottom-center",
+					className: "bg-red-400",
+					style: {
+						color: "white",
+						backgroundColor: "red",
+						borderColor: "red",
+					},
 				});
-				throw res.error;
-			}
-
-			const sessionData = {
-				expire_in: res.data.expiresIn as string,
-				avatar: res.data.avatar as string,
-				username: res.data.username as string,
-			} satisfies z.infer<typeof sessionSchema>;
-
-			await Promise.all([
-				setSessionServerFn({ data: sessionData }),
-				setIsAuthenticated({ data: true }),
-			]);
-
-			await router.invalidate();
-
-			queryClient.invalidateQueries({
-				queryKey: ["redirect-auth", code],
 			});
-
-			toast.success(`👋 Welcome ${res.data.username}!`, {
-				duration: 1000,
-				onAutoClose: () => {
-					navigate({ to: "/" });
-				},
-				position: "bottom-center",
-			});
-			return res.data;
-		},
-		refetchOnWindowFocus: false,
-	});
+	}, []);
 
 	return (
 		<main className="min-h-[calc(100vh-141px)] container flex flex-col items-center justify-center pb-20 pt-10 px-8 max-w-5xl mx-auto gap-4">
 			<section className="flex flex-col gap-y-2 items-center">
-				{isLoading ? (
-					<Loader2 className="text-yellow-400 animate-spin" size={32} />
-				) : status === "error" ? (
-					<X className="text-red-400" size={32} />
-				) : (
-					<CheckCircle2 className="text-green-400" size={32} />
-					
-				)}
+				<Loader2 className="text-yellow-400 animate-spin" size={32} />
 				<p className="text-muted-foreground animate-pulse font-medium">
-					{isLoading ? "Wait" : status === "error" ? error.message : "Redirecting"}
+					Wait a moment...
 				</p>
 			</section>
 		</main>

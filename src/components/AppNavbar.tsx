@@ -124,7 +124,15 @@ export function AppNavbar() {
 			})
 			.catch((err) => {
 				console.log(err);
-				toast.error("Failed to authenticate");
+				toast.error("Failed to authenticate", {
+					duration: 1000,
+					position: "bottom-center",
+					style: {
+						color: "white",
+						backgroundColor: "red",
+						borderColor: "red",
+					}
+				});
 			})
 			.finally(() => {
 				setIsFetching(false);
