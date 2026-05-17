@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import {
 	Sidebar,
 	SidebarContent,
@@ -9,18 +10,71 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/components/ui/sidebar";
-import { ChevronDown } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { useQuery } from "@tanstack/react-query";
+import { useApi } from "#/lib/openapi";
+import { useCallback } from "react";
 
 export function DashboardSidebar() {
+	const api = useApi();
+
+	const { data:guilds, isLoading, isError, error } = useQuery({
+		queryKey: ["dashboard-guilds"],
+		queryFn: async () => {
+			const data = await api.GET("/user/guilds");
+			return data.data;
+		}
+	});
+
 	return (
-    <Sidebar>
-      <SidebarHeader className="bg-black" />
-      <SidebarContent className="bg-black">
-        <SidebarGroup />
-        <SidebarGroup />
-      </SidebarContent>
-      <SidebarFooter className="bg-black" />
-    </Sidebar>
-  )
+		<Sidebar>
+			<SidebarHeader>
+				<SidebarMenu>
+					<SidebarMenuItem>
+						<DropdownMenu>
+							<DropdownMenuTrigger>
+								<SidebarMenuButton>
+									Select Workspace
+									<ChevronDown className="ml-auto" />
+								</SidebarMenuButton>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent className="w-[--radix-popper-anchor-width]">
+								{
+									isLoading && (
+										<DropdownMenuItem>
+											<span>Loading...</span>
+										</DropdownMenuItem>
+									)
+								}
+								{
+									isError && (
+										<DropdownMenuItem>
+											<span>Error</span>
+										</DropdownMenuItem>
+									)
+								}
+								{
+									guilds?.map((guild) => (
+										<DropdownMenuItem key={guild.id}>
+											<span>{guild.name}</span>
+										</DropdownMenuItem>
+									))
+								}
+							</DropdownMenuContent>
+						</DropdownMenu>
+					</SidebarMenuItem>
+				</SidebarMenu>
+			</SidebarHeader>
+			<SidebarContent>
+				<SidebarGroup />
+				<SidebarGroup />
+			</SidebarContent>
+			<SidebarFooter />
+		</Sidebar>
+	);
 }
