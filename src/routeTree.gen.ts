@@ -9,321 +9,399 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as PublicRouteRouteImport } from './routes/_public/route'
-import { Route as PrivateRouteRouteImport } from './routes/_private/route'
-import { Route as PublicIndexRouteImport } from './routes/_public/index'
-import { Route as PublicStatusRouteImport } from './routes/_public/status'
-import { Route as PublicCommandsRouteImport } from './routes/_public/commands'
-import { Route as PrivateDashboardRouteRouteImport } from './routes/_private/dashboard/route'
-import { Route as PrivateGuildRouteRouteImport } from './routes/_private/_guild/route'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
-import { Route as PublicAuthRedirectRouteImport } from './routes/_public/_auth/redirect'
-import { Route as PublicAuthLogoutRouteImport } from './routes/_public/_auth/logout'
-import { Route as PrivateDashboardOverviewRouteImport } from './routes/_private/dashboard/overview'
-import { Route as PrivateGuildGuildRouteImport } from './routes/_private/_guild/guild'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as Char123LocaleChar125RouteRouteImport } from './routes/{-$locale}/route'
+import { Route as ApiSplatRouteImport } from './routes/api/$'
+import { Route as Char123LocaleChar125PrivateRouteRouteImport } from './routes/{-$locale}/_private/route'
+import { Route as Char123LocaleChar125PublicRouteRouteImport } from './routes/{-$locale}/_public/route'
+import { Route as Char123LocaleChar125PrivateGuildRouteRouteImport } from './routes/{-$locale}/_private/_guild/route'
+import { Route as Char123LocaleChar125PrivateDashboardRouteRouteImport } from './routes/{-$locale}/_private/dashboard/route'
+import { Route as Char123LocaleChar125PublicIndexRouteImport } from './routes/{-$locale}/_public/index'
+import { Route as Char123LocaleChar125PublicCommandsRouteImport } from './routes/{-$locale}/_public/commands'
+import { Route as Char123LocaleChar125PublicStatusRouteImport } from './routes/{-$locale}/_public/status'
+import { Route as Char123LocaleChar125PrivateGuildGuildRouteImport } from './routes/{-$locale}/_private/_guild/guild'
+import { Route as Char123LocaleChar125PrivateDashboardIndexRouteImport } from './routes/{-$locale}/_private/dashboard/index'
+import { Route as Char123LocaleChar125PrivateDashboardOverviewRouteImport } from './routes/{-$locale}/_private/dashboard/overview'
 
-const PublicRouteRoute = PublicRouteRouteImport.update({
-  id: '/_public',
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateRouteRoute = PrivateRouteRouteImport.update({
-  id: '/_private',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicIndexRoute = PublicIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PublicStatusRoute = PublicStatusRouteImport.update({
-  id: '/status',
-  path: '/status',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PublicCommandsRoute = PublicCommandsRouteImport.update({
-  id: '/commands',
-  path: '/commands',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PrivateDashboardRouteRoute = PrivateDashboardRouteRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => PrivateRouteRoute,
-} as any)
-const PrivateGuildRouteRoute = PrivateGuildRouteRouteImport.update({
-  id: '/_guild',
-  getParentRoute: () => PrivateRouteRoute,
-} as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
-  id: '/api/auth/$',
-  path: '/api/auth/$',
+const Char123LocaleChar125RouteRoute =
+  Char123LocaleChar125RouteRouteImport.update({
+    id: '/{-$locale}',
+    path: '/{-$locale}',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicAuthRedirectRoute = PublicAuthRedirectRouteImport.update({
-  id: '/_auth/redirect',
-  path: '/redirect',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PublicAuthLogoutRoute = PublicAuthLogoutRouteImport.update({
-  id: '/_auth/logout',
-  path: '/logout',
-  getParentRoute: () => PublicRouteRoute,
-} as any)
-const PrivateDashboardOverviewRoute =
-  PrivateDashboardOverviewRouteImport.update({
+const Char123LocaleChar125PrivateRouteRoute =
+  Char123LocaleChar125PrivateRouteRouteImport.update({
+    id: '/_private',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125PublicRouteRoute =
+  Char123LocaleChar125PublicRouteRouteImport.update({
+    id: '/_public',
+    getParentRoute: () => Char123LocaleChar125RouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateGuildRouteRoute =
+  Char123LocaleChar125PrivateGuildRouteRouteImport.update({
+    id: '/_guild',
+    getParentRoute: () => Char123LocaleChar125PrivateRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardRouteRoute =
+  Char123LocaleChar125PrivateDashboardRouteRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => Char123LocaleChar125PrivateRouteRoute,
+  } as any)
+const Char123LocaleChar125PublicIndexRoute =
+  Char123LocaleChar125PublicIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125PublicRouteRoute,
+  } as any)
+const Char123LocaleChar125PublicCommandsRoute =
+  Char123LocaleChar125PublicCommandsRouteImport.update({
+    id: '/commands',
+    path: '/commands',
+    getParentRoute: () => Char123LocaleChar125PublicRouteRoute,
+  } as any)
+const Char123LocaleChar125PublicStatusRoute =
+  Char123LocaleChar125PublicStatusRouteImport.update({
+    id: '/status',
+    path: '/status',
+    getParentRoute: () => Char123LocaleChar125PublicRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateGuildGuildRoute =
+  Char123LocaleChar125PrivateGuildGuildRouteImport.update({
+    id: '/guild',
+    path: '/guild',
+    getParentRoute: () => Char123LocaleChar125PrivateGuildRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardIndexRoute =
+  Char123LocaleChar125PrivateDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardOverviewRoute =
+  Char123LocaleChar125PrivateDashboardOverviewRouteImport.update({
     id: '/overview',
     path: '/overview',
-    getParentRoute: () => PrivateDashboardRouteRoute,
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardRouteRoute,
   } as any)
-const PrivateGuildGuildRoute = PrivateGuildGuildRouteImport.update({
-  id: '/guild',
-  path: '/guild',
-  getParentRoute: () => PrivateGuildRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof PublicIndexRoute
-  '/dashboard': typeof PrivateDashboardRouteRouteWithChildren
-  '/commands': typeof PublicCommandsRoute
-  '/status': typeof PublicStatusRoute
-  '/guild': typeof PrivateGuildGuildRoute
-  '/dashboard/overview': typeof PrivateDashboardOverviewRoute
-  '/logout': typeof PublicAuthLogoutRoute
-  '/redirect': typeof PublicAuthRedirectRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/$': typeof ApiSplatRoute
+  '/{-$locale}/dashboard': typeof Char123LocaleChar125PrivateDashboardRouteRouteWithChildren
+  '/{-$locale}/commands': typeof Char123LocaleChar125PublicCommandsRoute
+  '/{-$locale}/status': typeof Char123LocaleChar125PublicStatusRoute
+  '/{-$locale}/': typeof Char123LocaleChar125PublicIndexRoute
+  '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
+  '/{-$locale}/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
+  '/{-$locale}/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof PublicIndexRoute
-  '/dashboard': typeof PrivateDashboardRouteRouteWithChildren
-  '/commands': typeof PublicCommandsRoute
-  '/status': typeof PublicStatusRoute
-  '/guild': typeof PrivateGuildGuildRoute
-  '/dashboard/overview': typeof PrivateDashboardOverviewRoute
-  '/logout': typeof PublicAuthLogoutRoute
-  '/redirect': typeof PublicAuthRedirectRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/{-$locale}': typeof Char123LocaleChar125PublicIndexRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/$': typeof ApiSplatRoute
+  '/{-$locale}/commands': typeof Char123LocaleChar125PublicCommandsRoute
+  '/{-$locale}/status': typeof Char123LocaleChar125PublicStatusRoute
+  '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
+  '/{-$locale}/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
+  '/{-$locale}/dashboard': typeof Char123LocaleChar125PrivateDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_private': typeof PrivateRouteRouteWithChildren
-  '/_public': typeof PublicRouteRouteWithChildren
-  '/_private/_guild': typeof PrivateGuildRouteRouteWithChildren
-  '/_private/dashboard': typeof PrivateDashboardRouteRouteWithChildren
-  '/_public/commands': typeof PublicCommandsRoute
-  '/_public/status': typeof PublicStatusRoute
-  '/_public/': typeof PublicIndexRoute
-  '/_private/_guild/guild': typeof PrivateGuildGuildRoute
-  '/_private/dashboard/overview': typeof PrivateDashboardOverviewRoute
-  '/_public/_auth/logout': typeof PublicAuthLogoutRoute
-  '/_public/_auth/redirect': typeof PublicAuthRedirectRoute
-  '/api/auth/$': typeof ApiAuthSplatRoute
+  '/{-$locale}': typeof Char123LocaleChar125RouteRouteWithChildren
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/{-$locale}/_private': typeof Char123LocaleChar125PrivateRouteRouteWithChildren
+  '/{-$locale}/_public': typeof Char123LocaleChar125PublicRouteRouteWithChildren
+  '/api/$': typeof ApiSplatRoute
+  '/{-$locale}/_private/_guild': typeof Char123LocaleChar125PrivateGuildRouteRouteWithChildren
+  '/{-$locale}/_private/dashboard': typeof Char123LocaleChar125PrivateDashboardRouteRouteWithChildren
+  '/{-$locale}/_public/commands': typeof Char123LocaleChar125PublicCommandsRoute
+  '/{-$locale}/_public/status': typeof Char123LocaleChar125PublicStatusRoute
+  '/{-$locale}/_public/': typeof Char123LocaleChar125PublicIndexRoute
+  '/{-$locale}/_private/_guild/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
+  '/{-$locale}/_private/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
+  '/{-$locale}/_private/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/dashboard'
-    | '/commands'
-    | '/status'
-    | '/guild'
-    | '/dashboard/overview'
-    | '/logout'
-    | '/redirect'
-    | '/api/auth/$'
+    | '/{-$locale}'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/api/$'
+    | '/{-$locale}/dashboard'
+    | '/{-$locale}/commands'
+    | '/{-$locale}/status'
+    | '/{-$locale}/'
+    | '/{-$locale}/guild'
+    | '/{-$locale}/dashboard/overview'
+    | '/{-$locale}/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/dashboard'
-    | '/commands'
-    | '/status'
-    | '/guild'
-    | '/dashboard/overview'
-    | '/logout'
-    | '/redirect'
-    | '/api/auth/$'
+    | '/{-$locale}'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/api/$'
+    | '/{-$locale}/commands'
+    | '/{-$locale}/status'
+    | '/{-$locale}/guild'
+    | '/{-$locale}/dashboard/overview'
+    | '/{-$locale}/dashboard'
   id:
     | '__root__'
-    | '/_private'
-    | '/_public'
-    | '/_private/_guild'
-    | '/_private/dashboard'
-    | '/_public/commands'
-    | '/_public/status'
-    | '/_public/'
-    | '/_private/_guild/guild'
-    | '/_private/dashboard/overview'
-    | '/_public/_auth/logout'
-    | '/_public/_auth/redirect'
-    | '/api/auth/$'
+    | '/{-$locale}'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/{-$locale}/_private'
+    | '/{-$locale}/_public'
+    | '/api/$'
+    | '/{-$locale}/_private/_guild'
+    | '/{-$locale}/_private/dashboard'
+    | '/{-$locale}/_public/commands'
+    | '/{-$locale}/_public/status'
+    | '/{-$locale}/_public/'
+    | '/{-$locale}/_private/_guild/guild'
+    | '/{-$locale}/_private/dashboard/overview'
+    | '/{-$locale}/_private/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
-  PublicRouteRoute: typeof PublicRouteRouteWithChildren
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  Char123LocaleChar125RouteRoute: typeof Char123LocaleChar125RouteRouteWithChildren
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiSplatRoute: typeof ApiSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_public': {
-      id: '/_public'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PublicRouteRouteImport
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_private': {
-      id: '/_private'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PrivateRouteRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_public/': {
-      id: '/_public/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/{-$locale}': {
+      id: '/{-$locale}'
+      path: '/{-$locale}'
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125RouteRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_public/status': {
-      id: '/_public/status'
-      path: '/status'
-      fullPath: '/status'
-      preLoaderRoute: typeof PublicStatusRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_public/commands': {
-      id: '/_public/commands'
-      path: '/commands'
-      fullPath: '/commands'
-      preLoaderRoute: typeof PublicCommandsRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/{-$locale}/_private': {
+      id: '/{-$locale}/_private'
+      path: ''
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
     }
-    '/_private/dashboard': {
-      id: '/_private/dashboard'
+    '/{-$locale}/_public': {
+      id: '/{-$locale}/_public'
+      path: ''
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125PublicRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125RouteRoute
+    }
+    '/{-$locale}/_private/_guild': {
+      id: '/{-$locale}/_private/_guild'
+      path: ''
+      fullPath: '/{-$locale}'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateGuildRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateRouteRoute
+    }
+    '/{-$locale}/_private/dashboard': {
+      id: '/{-$locale}/_private/dashboard'
       path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof PrivateDashboardRouteRouteImport
-      parentRoute: typeof PrivateRouteRoute
+      fullPath: '/{-$locale}/dashboard'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardRouteRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateRouteRoute
     }
-    '/_private/_guild': {
-      id: '/_private/_guild'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof PrivateGuildRouteRouteImport
-      parentRoute: typeof PrivateRouteRoute
+    '/{-$locale}/_public/': {
+      id: '/{-$locale}/_public/'
+      path: '/'
+      fullPath: '/{-$locale}/'
+      preLoaderRoute: typeof Char123LocaleChar125PublicIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125PublicRouteRoute
     }
-    '/api/auth/$': {
-      id: '/api/auth/$'
-      path: '/api/auth/$'
-      fullPath: '/api/auth/$'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
-      parentRoute: typeof rootRouteImport
+    '/{-$locale}/_public/commands': {
+      id: '/{-$locale}/_public/commands'
+      path: '/commands'
+      fullPath: '/{-$locale}/commands'
+      preLoaderRoute: typeof Char123LocaleChar125PublicCommandsRouteImport
+      parentRoute: typeof Char123LocaleChar125PublicRouteRoute
     }
-    '/_public/_auth/redirect': {
-      id: '/_public/_auth/redirect'
-      path: '/redirect'
-      fullPath: '/redirect'
-      preLoaderRoute: typeof PublicAuthRedirectRouteImport
-      parentRoute: typeof PublicRouteRoute
+    '/{-$locale}/_public/status': {
+      id: '/{-$locale}/_public/status'
+      path: '/status'
+      fullPath: '/{-$locale}/status'
+      preLoaderRoute: typeof Char123LocaleChar125PublicStatusRouteImport
+      parentRoute: typeof Char123LocaleChar125PublicRouteRoute
     }
-    '/_public/_auth/logout': {
-      id: '/_public/_auth/logout'
-      path: '/logout'
-      fullPath: '/logout'
-      preLoaderRoute: typeof PublicAuthLogoutRouteImport
-      parentRoute: typeof PublicRouteRoute
-    }
-    '/_private/dashboard/overview': {
-      id: '/_private/dashboard/overview'
-      path: '/overview'
-      fullPath: '/dashboard/overview'
-      preLoaderRoute: typeof PrivateDashboardOverviewRouteImport
-      parentRoute: typeof PrivateDashboardRouteRoute
-    }
-    '/_private/_guild/guild': {
-      id: '/_private/_guild/guild'
+    '/{-$locale}/_private/_guild/guild': {
+      id: '/{-$locale}/_private/_guild/guild'
       path: '/guild'
-      fullPath: '/guild'
-      preLoaderRoute: typeof PrivateGuildGuildRouteImport
-      parentRoute: typeof PrivateGuildRouteRoute
+      fullPath: '/{-$locale}/guild'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateGuildGuildRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateGuildRouteRoute
+    }
+    '/{-$locale}/_private/dashboard/': {
+      id: '/{-$locale}/_private/dashboard/'
+      path: '/'
+      fullPath: '/{-$locale}/dashboard/'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardRouteRoute
+    }
+    '/{-$locale}/_private/dashboard/overview': {
+      id: '/{-$locale}/_private/dashboard/overview'
+      path: '/overview'
+      fullPath: '/{-$locale}/dashboard/overview'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardOverviewRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardRouteRoute
     }
   }
 }
 
-interface PrivateGuildRouteRouteChildren {
-  PrivateGuildGuildRoute: typeof PrivateGuildGuildRoute
+interface Char123LocaleChar125PrivateGuildRouteRouteChildren {
+  Char123LocaleChar125PrivateGuildGuildRoute: typeof Char123LocaleChar125PrivateGuildGuildRoute
 }
 
-const PrivateGuildRouteRouteChildren: PrivateGuildRouteRouteChildren = {
-  PrivateGuildGuildRoute: PrivateGuildGuildRoute,
-}
+const Char123LocaleChar125PrivateGuildRouteRouteChildren: Char123LocaleChar125PrivateGuildRouteRouteChildren =
+  {
+    Char123LocaleChar125PrivateGuildGuildRoute:
+      Char123LocaleChar125PrivateGuildGuildRoute,
+  }
 
-const PrivateGuildRouteRouteWithChildren =
-  PrivateGuildRouteRoute._addFileChildren(PrivateGuildRouteRouteChildren)
-
-interface PrivateDashboardRouteRouteChildren {
-  PrivateDashboardOverviewRoute: typeof PrivateDashboardOverviewRoute
-}
-
-const PrivateDashboardRouteRouteChildren: PrivateDashboardRouteRouteChildren = {
-  PrivateDashboardOverviewRoute: PrivateDashboardOverviewRoute,
-}
-
-const PrivateDashboardRouteRouteWithChildren =
-  PrivateDashboardRouteRoute._addFileChildren(
-    PrivateDashboardRouteRouteChildren,
+const Char123LocaleChar125PrivateGuildRouteRouteWithChildren =
+  Char123LocaleChar125PrivateGuildRouteRoute._addFileChildren(
+    Char123LocaleChar125PrivateGuildRouteRouteChildren,
   )
 
-interface PrivateRouteRouteChildren {
-  PrivateGuildRouteRoute: typeof PrivateGuildRouteRouteWithChildren
-  PrivateDashboardRouteRoute: typeof PrivateDashboardRouteRouteWithChildren
+interface Char123LocaleChar125PrivateDashboardRouteRouteChildren {
+  Char123LocaleChar125PrivateDashboardOverviewRoute: typeof Char123LocaleChar125PrivateDashboardOverviewRoute
+  Char123LocaleChar125PrivateDashboardIndexRoute: typeof Char123LocaleChar125PrivateDashboardIndexRoute
 }
 
-const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
-  PrivateGuildRouteRoute: PrivateGuildRouteRouteWithChildren,
-  PrivateDashboardRouteRoute: PrivateDashboardRouteRouteWithChildren,
+const Char123LocaleChar125PrivateDashboardRouteRouteChildren: Char123LocaleChar125PrivateDashboardRouteRouteChildren =
+  {
+    Char123LocaleChar125PrivateDashboardOverviewRoute:
+      Char123LocaleChar125PrivateDashboardOverviewRoute,
+    Char123LocaleChar125PrivateDashboardIndexRoute:
+      Char123LocaleChar125PrivateDashboardIndexRoute,
+  }
+
+const Char123LocaleChar125PrivateDashboardRouteRouteWithChildren =
+  Char123LocaleChar125PrivateDashboardRouteRoute._addFileChildren(
+    Char123LocaleChar125PrivateDashboardRouteRouteChildren,
+  )
+
+interface Char123LocaleChar125PrivateRouteRouteChildren {
+  Char123LocaleChar125PrivateGuildRouteRoute: typeof Char123LocaleChar125PrivateGuildRouteRouteWithChildren
+  Char123LocaleChar125PrivateDashboardRouteRoute: typeof Char123LocaleChar125PrivateDashboardRouteRouteWithChildren
 }
 
-const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
-  PrivateRouteRouteChildren,
-)
+const Char123LocaleChar125PrivateRouteRouteChildren: Char123LocaleChar125PrivateRouteRouteChildren =
+  {
+    Char123LocaleChar125PrivateGuildRouteRoute:
+      Char123LocaleChar125PrivateGuildRouteRouteWithChildren,
+    Char123LocaleChar125PrivateDashboardRouteRoute:
+      Char123LocaleChar125PrivateDashboardRouteRouteWithChildren,
+  }
 
-interface PublicRouteRouteChildren {
-  PublicCommandsRoute: typeof PublicCommandsRoute
-  PublicStatusRoute: typeof PublicStatusRoute
-  PublicIndexRoute: typeof PublicIndexRoute
-  PublicAuthLogoutRoute: typeof PublicAuthLogoutRoute
-  PublicAuthRedirectRoute: typeof PublicAuthRedirectRoute
+const Char123LocaleChar125PrivateRouteRouteWithChildren =
+  Char123LocaleChar125PrivateRouteRoute._addFileChildren(
+    Char123LocaleChar125PrivateRouteRouteChildren,
+  )
+
+interface Char123LocaleChar125PublicRouteRouteChildren {
+  Char123LocaleChar125PublicCommandsRoute: typeof Char123LocaleChar125PublicCommandsRoute
+  Char123LocaleChar125PublicStatusRoute: typeof Char123LocaleChar125PublicStatusRoute
+  Char123LocaleChar125PublicIndexRoute: typeof Char123LocaleChar125PublicIndexRoute
 }
 
-const PublicRouteRouteChildren: PublicRouteRouteChildren = {
-  PublicCommandsRoute: PublicCommandsRoute,
-  PublicStatusRoute: PublicStatusRoute,
-  PublicIndexRoute: PublicIndexRoute,
-  PublicAuthLogoutRoute: PublicAuthLogoutRoute,
-  PublicAuthRedirectRoute: PublicAuthRedirectRoute,
+const Char123LocaleChar125PublicRouteRouteChildren: Char123LocaleChar125PublicRouteRouteChildren =
+  {
+    Char123LocaleChar125PublicCommandsRoute:
+      Char123LocaleChar125PublicCommandsRoute,
+    Char123LocaleChar125PublicStatusRoute:
+      Char123LocaleChar125PublicStatusRoute,
+    Char123LocaleChar125PublicIndexRoute: Char123LocaleChar125PublicIndexRoute,
+  }
+
+const Char123LocaleChar125PublicRouteRouteWithChildren =
+  Char123LocaleChar125PublicRouteRoute._addFileChildren(
+    Char123LocaleChar125PublicRouteRouteChildren,
+  )
+
+interface Char123LocaleChar125RouteRouteChildren {
+  Char123LocaleChar125PrivateRouteRoute: typeof Char123LocaleChar125PrivateRouteRouteWithChildren
+  Char123LocaleChar125PublicRouteRoute: typeof Char123LocaleChar125PublicRouteRouteWithChildren
 }
 
-const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
-  PublicRouteRouteChildren,
-)
+const Char123LocaleChar125RouteRouteChildren: Char123LocaleChar125RouteRouteChildren =
+  {
+    Char123LocaleChar125PrivateRouteRoute:
+      Char123LocaleChar125PrivateRouteRouteWithChildren,
+    Char123LocaleChar125PublicRouteRoute:
+      Char123LocaleChar125PublicRouteRouteWithChildren,
+  }
+
+const Char123LocaleChar125RouteRouteWithChildren =
+  Char123LocaleChar125RouteRoute._addFileChildren(
+    Char123LocaleChar125RouteRouteChildren,
+  )
 
 const rootRouteChildren: RootRouteChildren = {
-  PrivateRouteRoute: PrivateRouteRouteWithChildren,
-  PublicRouteRoute: PublicRouteRouteWithChildren,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  Char123LocaleChar125RouteRoute: Char123LocaleChar125RouteRouteWithChildren,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiSplatRoute: ApiSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
 import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
+import type { startInstance } from './start.ts'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
   }
 }

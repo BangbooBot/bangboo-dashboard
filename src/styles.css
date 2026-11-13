@@ -9,6 +9,7 @@
 @import "shadcn/tailwind.css";
 
 @import "@fontsource-variable/geist";
+@import "@fontsource/anton";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -125,6 +126,12 @@
 
 @theme inline {
   --font-sans: 'Geist Variable', sans-serif;
+  --font-news: 'Anton', 'Impact', sans-serif;
+  /* Jornal da home (features/home/components/newspaper) */
+  --color-paper: #e9dccb;
+  --color-paper-shade: #d8c8b3;
+  --color-ink: #262b27;
+  --color-press: #e4572e;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

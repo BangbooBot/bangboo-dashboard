@@ -1,31 +1,32 @@
-import { createRouter as createTanStackRouter } from '@tanstack/react-router'
-import { routeTree } from './routeTree.gen'
-
-import type { ReactNode } from 'react'
-import { QueryClient } from '@tanstack/react-query'
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
-import TanstackQueryProvider, {
-  getContext,
-} from './integrations/tanstack-query/root-provider'
+import { createRouter as createTanStackRouter } from "@tanstack/react-router";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+import { RouteError, RouteNotFound } from "#/components/shared/RouteFallbacks";
+import { createQueryClient } from "#/integrations/tanstack-query/root-provider";
+import { routeTree } from "./routeTree.gen";
 
 export function getRouter() {
-  const context = getContext()
+	const queryClient = createQueryClient({
+		// Sessão expirou no meio do uso: recarrega o contexto (o guard de _private redireciona).
+		onUnauthorized: () => void router.invalidate(),
+	});
 
-  const router = createTanStackRouter({
-    routeTree,
-    context,
-    scrollRestoration: true,
-    defaultPreload: 'intent',
-    defaultPreloadStaleTime: 0,
-  })
+	const router = createTanStackRouter({
+		routeTree,
+		context: { queryClient },
+		scrollRestoration: true,
+		defaultPreload: "intent",
+		defaultPreloadStaleTime: 0,
+		defaultErrorComponent: RouteError,
+		defaultNotFoundComponent: RouteNotFound,
+	});
 
-  setupRouterSsrQueryIntegration({ router, queryClient: context.queryClient })
+	setupRouterSsrQueryIntegration({ router, queryClient });
 
-  return router
+	return router;
 }
 
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: ReturnType<typeof getRouter>
-  }
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: ReturnType<typeof getRouter>;
+	}
 }

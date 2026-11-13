@@ -12,3 +12,7 @@ dist-ssr
 __unconfig*
 todos.json
 package-lock.json
+
+# Gerados
+coverage
+.intlayer

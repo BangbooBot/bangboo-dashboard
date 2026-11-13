@@ -4,43 +4,37 @@
  */
 
 export interface paths {
-    "/auth/authorize": {
+    "/api/auth/login": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /**
+         * Inicia o login com Discord.
+         * @description Redireciona para o OAuth do Discord. Após o login, o cookie `bangboo.auth` é criado e o
+         *     navegador volta para returnUrl (apenas caminhos relativos; padrão `/dashboard`).
+         *     Abra esta URL como navegação de página, não via fetch.
+         */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    /** @description Caminho do dashboard para voltar após o login. */
+                    returnUrl?: string;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
             };
             requestBody?: never;
             responses: {
-                /** @description OK */
-                200: {
+                /** @description Found */
+                302: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content: {
-                        "text/plain": components["schemas"]["AuthorizeResponse"];
-                        "application/json": components["schemas"]["AuthorizeResponse"];
-                        "text/json": components["schemas"]["AuthorizeResponse"];
-                    };
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["AuthErrorResponse"];
-                        "application/json": components["schemas"]["AuthErrorResponse"];
-                        "text/json": components["schemas"]["AuthErrorResponse"];
-                    };
+                    content?: never;
                 };
             };
         };
@@ -52,7 +46,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/auth/login": {
+    "/api/auth/logout": {
         parameters: {
             query?: never;
             header?: never;
@@ -61,62 +55,11 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * Encerra a sessão.
+         * @description Remove o cookie de autenticação. Idempotente: responde 204 mesmo sem sessão.
+         */
         post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["LoginBody"];
-                    "text/json": components["schemas"]["LoginBody"];
-                    "application/*+json": components["schemas"]["LoginBody"];
-                };
-            };
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["LoginResponse"];
-                        "application/json": components["schemas"]["LoginResponse"];
-                        "text/json": components["schemas"]["LoginResponse"];
-                    };
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["AuthErrorResponse"];
-                        "application/json": components["schemas"]["AuthErrorResponse"];
-                        "text/json": components["schemas"]["AuthErrorResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete: {
             parameters: {
                 query?: never;
                 header?: never;
@@ -132,79 +75,25 @@ export interface paths {
                     };
                     content?: never;
                 };
-                /** @description Not Found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
             };
         };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["StatusReponse"];
-                        "application/json": components["schemas"]["StatusReponse"];
-                        "text/json": components["schemas"]["StatusReponse"];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/status/commands": {
+    "/api/auth/me": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /**
+         * Usuário logado.
+         * @description Retorna o perfil do usuário da sessão atual, ou 401 se não houver sessão.
+         */
         get: {
             parameters: {
                 query?: never;
@@ -220,68 +109,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["CommandReponse"][];
-                        "application/json": components["schemas"]["CommandReponse"][];
-                        "text/json": components["schemas"]["CommandReponse"][];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/user": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description OK */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["JsonUser"];
-                        "application/json": components["schemas"]["JsonUser"];
-                        "text/json": components["schemas"]["JsonUser"];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": string;
-                        "application/json": string;
-                        "text/json": string;
+                        "application/json": components["schemas"]["UserResponse"];
                     };
                 };
                 /** @description Unauthorized */
@@ -290,31 +118,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-                /** @description Not Found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
-                    };
-                };
-                /** @description Internal Server Error */
-                500: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": string;
-                        "application/json": string;
-                        "text/json": string;
+                        "application/json": components["schemas"]["ApiError"];
                     };
                 };
             };
@@ -327,13 +131,18 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user/guilds": {
+    "/api/guilds": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /**
+         * Guilds gerenciáveis.
+         * @description Guilds em que o usuário é dono, Administrator ou tem Manage Server.
+         *     `isBotMember` indica se o bot já está na guild.
+         */
         get: {
             parameters: {
                 query?: never;
@@ -349,20 +158,7 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["UserGuildResponse"][];
-                        "application/json": components["schemas"]["UserGuildResponse"][];
-                        "text/json": components["schemas"]["UserGuildResponse"][];
-                    };
-                };
-                /** @description Bad Request */
-                400: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": string;
-                        "application/json": string;
-                        "text/json": string;
+                        "application/json": components["schemas"]["GuildResponse"][];
                     };
                 };
                 /** @description Unauthorized */
@@ -371,20 +167,190 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": components["schemas"]["ProblemDetails"];
-                        "application/json": components["schemas"]["ProblemDetails"];
-                        "text/json": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ApiError"];
                     };
                 };
-                /** @description Internal Server Error */
-                500: {
+                /** @description Bad Gateway */
+                502: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "text/plain": string;
-                        "application/json": string;
-                        "text/json": string;
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/guilds/{guildId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Detalhes de uma guild.
+         * @description Exige permissão de gerenciar a guild.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GuildResponse"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Status do bot.
+         * @description Online/offline (pelo heartbeat do bot), servidores, latência e quantidade de comandos.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["StatusResponse"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/status/commands": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Slash commands do bot.
+         * @description Lista de comandos registrados no Discord, em ordem alfabética.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["CommandResponse"][];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
                     };
                 };
             };
@@ -401,125 +367,86 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        AuthErrorResponse: {
-            /** Format: int32 */
-            code?: number | string;
-            error?: string;
-            message?: string;
+        /** @description Corpo padrão de TODA resposta de erro da API. */
+        ApiError: {
+            /**
+             * Format: int32
+             * @description Código HTTP (repetido no corpo para facilitar o consumo no front).
+             */
+            status: number;
+            /** @description Mensagem legível, segura para exibir ao usuário. */
+            message: string;
         };
-        AuthorizeResponse: {
-            url?: string;
+        /** @description Slash command do bot. */
+        CommandResponse: {
+            name: string;
+            description: string;
         };
-        Color: unknown;
-        CommandReponse: {
-            name?: string;
-            description?: string;
+        /** @description Guild que o usuário pode gerenciar. */
+        GuildResponse: {
+            /** @description ID do Discord (string). */
+            id: string;
+            /** @description Nome da guild. */
+            name: string;
+            /** @description URL do ícone, se houver. */
+            iconUrl: null | string;
+            /** @description URL do banner, se houver. */
+            bannerUrl: null | string;
+            /** @description O usuário é o dono da guild. */
+            isOwner: boolean;
+            /** @description O bot já está na guild (se não, o dashboard oferece o convite). */
+            isBotMember: boolean;
+            /**
+             * Format: int32
+             * @description Total aproximado de membros.
+             */
+            approximateMemberCount: number;
+            /**
+             * Format: int32
+             * @description Total aproximado de membros online.
+             */
+            approximatePresenceCount: number;
         };
-        GuildUserFlags: number;
-        JsonAvatarDecorationData: {
-            asset?: string;
-            /** Format: uint64 */
-            sku_id?: number | string;
+        /** @description Estado atual do bot. */
+        StatusResponse: {
+            /** @description O bot enviou heartbeat recentemente. */
+            online: boolean;
+            /**
+             * Format: int32
+             * @description Quantidade de servidores em que o bot está.
+             */
+            guildCount: number;
+            /**
+             * Format: int32
+             * @description Latência do gateway no último heartbeat.
+             */
+            latencyMs: number;
+            /**
+             * Format: int32
+             * @description Quantidade de slash commands registrados.
+             */
+            commandCount: number;
+            /**
+             * Format: date-time
+             * @description Quando o processo do bot iniciou (null se nunca reportou).
+             */
+            startedAt: null | string;
+            /**
+             * Format: date-time
+             * @description Último heartbeat (null se nunca reportou).
+             */
+            updatedAt: null | string;
         };
-        JsonCollectibles: {
-            nameplate?: null | components["schemas"]["JsonNameplate"];
-        };
-        JsonGuildUser: {
-            user?: components["schemas"]["JsonUser"];
-            nick?: null | string;
-            avatar?: null | string;
-            banner?: null | string;
-            roles?: (number | string)[];
-            /** Format: date-time */
-            joined_at?: null | string;
-            /** Format: date-time */
-            premium_since?: null | string;
-            deaf?: boolean;
-            mute?: boolean;
-            flags?: components["schemas"]["GuildUserFlags"];
-            pending?: null | boolean;
-            permissions?: null | components["schemas"]["Permissions"];
-            /** Format: date-time */
-            communication_disabled_until?: null | string;
-            avatar_decoration_data?: null | components["schemas"]["JsonAvatarDecorationData"];
-        };
-        JsonNameplate: {
-            /** Format: uint64 */
-            sku_id?: number | string;
-            asset?: string;
-            label?: string;
-            palette?: string;
-        };
-        JsonUser: {
-            username?: string;
-            /** Format: uint16 */
-            discriminator?: number | string;
-            global_name?: null | string;
-            avatar?: null | string;
-            bot?: boolean;
-            system?: null | boolean;
-            mfa_enabled?: null | boolean;
-            banner?: null | string;
-            accent_color?: null | components["schemas"]["Color"];
-            locale?: null | string;
-            verified?: null | boolean;
-            email?: null | string;
-            flags?: null | components["schemas"]["UserFlags"];
-            premium_type?: null | components["schemas"]["PremiumType"];
-            public_flags?: null | components["schemas"]["UserFlags"];
-            avatar_decoration_data?: null | components["schemas"]["JsonAvatarDecorationData"];
-            collectibles?: null | components["schemas"]["JsonCollectibles"];
-            primary_guild?: null | components["schemas"]["JsonUserPrimaryGuild"];
-            member?: null | components["schemas"]["JsonGuildUser"];
-            /** Format: uint64 */
-            id?: number | string;
-        };
-        JsonUserPrimaryGuild: {
-            /** Format: uint64 */
-            identity_guild_id?: null | number | string;
-            identity_enabled?: null | boolean;
-            tag?: null | string;
-            badge?: null | string;
-        };
-        LoginBody: {
-            code: string;
-        };
-        LoginResponse: {
-            /** Format: date */
-            expiresIn?: string;
-            username?: string;
-            avatar?: null | string;
-        };
-        Permissions: number;
-        PremiumType: number;
-        ProblemDetails: {
-            type?: null | string;
-            title?: null | string;
-            /** Format: int32 */
-            status?: null | number | string;
-            detail?: null | string;
-            instance?: null | string;
-        };
-        StatusReponse: {
-            /** Format: int32 */
-            serverCount: number | string;
-            /** Format: int32 */
-            commandsCount: number | string;
-        };
-        UserFlags: number;
-        UserGuildResponse: {
-            id?: string;
-            name?: string;
-            icon?: string;
-            banner?: string;
-            owner?: boolean;
-            isMember?: boolean;
-            permissions?: null | string;
-            features?: string[];
-            /** Format: uint32 */
-            approximateMemberCount?: number | string;
-            /** Format: uint32 */
-            approximatePresenceCount?: number | string;
+        /** @description Usuário logado no dashboard. */
+        UserResponse: {
+            /** @description ID do Discord (string: snowflakes não cabem em number do JS). */
+            id: string;
+            /** @description Username único do Discord. */
+            username: string;
+            /** @description Nome de exibição, se definido. */
+            globalName: null | string;
+            /** @description URL do avatar (ou o avatar padrão do Discord). */
+            avatarUrl: string;
         };
     };
     responses: never;

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Versão do pnpm vem do campo "packageManager" do package.json
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      # O script "prepare" compila as mensagens do Paraglide (src/paraglide)
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint & format (Biome)
+        run: pnpm check
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      # Tipos da API precisam bater com o snapshot commitado em openapi/
+      - name: Check API types are up to date
+        run: |
+          pnpm api:types
+          git diff --exit-code -- src/types/api.ts || {
+            echo "::error::src/types/api.ts não corresponde a openapi/bangboo-api.json. Rode 'pnpm api:sync' e commite."
+            exit 1
+          }
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
