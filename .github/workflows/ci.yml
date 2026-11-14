@@ -13,37 +13,45 @@ jobs:
   check-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      # Versão do pnpm vem do campo "packageManager" do package.json
-      - uses: pnpm/action-setup@v4
+      # Versão do Bun vem do campo "packageManager" do package.json
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
 
-      - uses: actions/setup-node@v4
+      # Vite/Vitest rodam no Node (os binários usam #!/usr/bin/env node)
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: pnpm
 
-      # O script "prepare" compila as mensagens do Paraglide (src/paraglide)
+      - uses: actions/cache@v6
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+
+      # O script "prepare" gera os dicionários do Intlayer (.intlayer/)
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: bun install --frozen-lockfile
 
       - name: Lint & format (Biome)
-        run: pnpm check
+        run: bun run check
 
       - name: Typecheck
-        run: pnpm typecheck
+        run: bun run typecheck
 
       # Tipos da API precisam bater com o snapshot commitado em openapi/
       - name: Check API types are up to date
         run: |
-          pnpm api:types
+          bun run api:types
           git diff --exit-code -- src/types/api.ts || {
-            echo "::error::src/types/api.ts não corresponde a openapi/bangboo-api.json. Rode 'pnpm api:sync' e commite."
+            echo "::error::src/types/api.ts não corresponde a openapi/bangboo-api.json. Rode 'bun run api:sync' e commite."
             exit 1
           }
 
       - name: Test
-        run: pnpm test
+        run: bun run test
 
       - name: Build
-        run: pnpm build
+        run: bun run build

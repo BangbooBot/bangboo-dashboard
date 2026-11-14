@@ -49,7 +49,7 @@ src/
     shared/               reutilizáveis por 2+ features: QueryBoundary, ErrorFallback, RouteFallbacks, LocalizedLink
   lib/                    api-client.ts, api-error.ts, notify.ts, links.ts, utils.ts
   test/                   setup.ts, render.tsx (renderWithProviders), msw/ (server, handlers, fixtures)
-  types/api.ts            GERADO por `pnpm api:types` — nunca editar
+  types/api.ts            GERADO por `bun run api:types` — nunca editar
   lib/seo/                pageSeo() (title, description, OG, canonical, hreflang) + seo.content.ts
   lib/i18n.ts             LocalizedPath, localeParam(), toLocaleRoute()
 .intlayer/                GERADO pelo Intlayer (dicionários e tipos) — ignorado pelo git
@@ -155,21 +155,21 @@ export const useMobileNavStore = create<MobileNavState>()((set) => ({
 ## 6. Contrato da API (OpenAPI → tipos)
 
 - A API gera `../bangboo-bot/openapi/Bangboo.Api.json` no build. Este repo guarda uma cópia em `openapi/bangboo-api.json`.
-- `pnpm api:sync`: copia o JSON do repo da API (ou baixa de `$API_URL/openapi/v1.json`, se `API_URL` estiver definido) e roda `api:types`.
-- `pnpm api:types`: `openapi-typescript openapi/bangboo-api.json -o src/types/api.ts`.
-- Mudou endpoint na API? Rode `pnpm api:sync` e commite o snapshot e os tipos juntos. **Nunca edite `src/types/api.ts` à mão.** O CI falha se os dois divergirem.
+- `bun run api:sync`: copia o JSON do repo da API (ou baixa de `$API_URL/openapi/v1.json`, se `API_URL` estiver definido) e roda `api:types`.
+- `bun run api:types`: `openapi-typescript openapi/bangboo-api.json -o src/types/api.ts`.
+- Mudou endpoint na API? Rode `bun run api:sync` e commite o snapshot e os tipos juntos. **Nunca edite `src/types/api.ts` à mão.** O CI falha se os dois divergirem.
 - Docs navegáveis da API (com ela rodando): Scalar em `http://localhost:3001/scalar` e Swagger em `http://localhost:3001/swagger`.
 
 ## 7. Ambiente
 
 - Copie `.env.example` para `.env`: `API_URL` (padrão `http://localhost:3001`) e `VITE_DISCORD_CLIENT_ID` (links de convite do bot; sem ele o botão de convite não aparece).
-- Gerenciador: **pnpm** (versão fixada em `packageManager`). Sem pnpm global, use `npx pnpm@<versão>` ou `corepack enable`.
-- `pnpm install` roda `prepare` (`intlayer build`), que gera `.intlayer/` (dicionários e tipos, ignorado pelo git). O plugin do Vite recompila ao salvar um `*.content.ts`.
+- Gerenciador: **Bun** (versão fixada em `packageManager`; lockfile `bun.lock`). Use sempre `bun install` / `bun run <script>` e `bun add`; não use npm/pnpm/yarn. Scripts de install bloqueados por padrão: libere em `trustedDependencies` só o necessário.
+- `bun install` roda `prepare` (`intlayer build`), que gera `.intlayer/` (dicionários e tipos, ignorado pelo git). O plugin do Vite recompila ao salvar um `*.content.ts`.
 - `VITE_SITE_URL`: URL pública usada em canonical, Open Graph, `sitemap.xml` e `robots.txt` (padrão `http://localhost:3000`).
 
 ## 8. Estilo de código
 
-- Biome (tabs, aspas duplas, organize imports): rode `pnpm check` antes de concluir.
+- Biome (tabs, aspas duplas, organize imports): rode `bun run check` antes de concluir.
 - TypeScript estrito, sem `any` (use `unknown` + narrowing) e sem `as` para esconder erro de tipo.
 - Imports internos sempre com `#/`.
 - Nomes: componentes em `PascalCase.tsx`, hooks em `useXxx.ts`, stores em `xxx.store.ts`, lógica pura em `kebab-case.ts`, testes em `xxx.test.ts(x)` ao lado do arquivo.
@@ -191,12 +191,12 @@ export const useMobileNavStore = create<MobileNavState>()((set) => ({
 ## 10. Comandos
 
 ```bash
-pnpm dev          # http://localhost:3000 (precisa da API em API_URL)
-pnpm check        # Biome
-pnpm typecheck
-pnpm test
-pnpm build
-pnpm api:sync     # atualiza openapi/ e src/types/api.ts
+bun run dev          # http://localhost:3000 (precisa da API em API_URL)
+bun run check        # Biome
+bun run typecheck
+bun run test
+bun run build
+bun run api:sync     # atualiza openapi/ e src/types/api.ts
 ```
 
 ## 11. Checklist antes de concluir uma tarefa
@@ -205,8 +205,8 @@ pnpm api:sync     # atualiza openapi/ e src/types/api.ts
 - [ ] Dados via `queryOptions` + `prefetchQuery` no loader + `QueryBoundary`. Nenhum fetch em componente ou `useEffect`.
 - [ ] Mutation com `onError: notify.apiError`.
 - [ ] Nenhum texto hardcoded, `style={{}}` ou `toast()` direto. Textos novos em `*.content.ts` com `en` **e** `pt-BR`.
-- [ ] `pnpm check`, `pnpm typecheck` e `pnpm test` verdes.
-- [ ] Tipos da API atualizados (`pnpm api:sync`), se o contrato mudou.
+- [ ] `bun run check`, `bun run typecheck` e `bun run test` verdes.
+- [ ] Tipos da API atualizados (`bun run api:sync`), se o contrato mudou.
 
 ## 12. Dívidas conhecidas
 

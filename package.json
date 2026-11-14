@@ -16,8 +16,8 @@
     "check": "biome check",
     "typecheck": "tsc --noEmit",
     "api:types": "openapi-typescript openapi/bangboo-api.json -o src/types/api.ts",
-    "api:sync": "node scripts/api-sync.mjs && pnpm api:types",
-    "prepare": "pnpm i18n:build",
+    "api:sync": "bun scripts/api-sync.mjs && bun run api:types",
+    "prepare": "bun run i18n:build",
     "i18n:build": "intlayer build"
   },
   "dependencies": {
@@ -84,11 +84,9 @@
     "vite-intlayer": "latest",
     "vitest": "latest"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
-  },
-  "packageManager": "pnpm@10.30.0"
+  "packageManager": "bun@1.4.4",
+  "trustedDependencies": [
+    "esbuild",
+    "lightningcss"
+  ]
 }
