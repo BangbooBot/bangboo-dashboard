@@ -267,6 +267,321 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/guilds/{guildId}/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Visão geral do servidor.
+         * @description Membros, online, canais, cargos, impulsos e configurações do Bangboo. Exige permissão de
+         *     gerenciar a guild; 404 se o bot não estiver no servidor.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GuildOverviewResponse"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/guilds/{guildId}/channels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Canais de texto do servidor.
+         * @description Canais de texto e anúncios, na ordem do Discord (para seletores). 404 se o bot não estiver no servidor.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GuildChannelResponse"][];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/guilds/{guildId}/mousetrap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Configuração do mousetrap.
+         * @description Canal-armadilha: quem enviar mensagem nele é punido (pega contas hackeadas que mandam spam).
+         *     Se nunca foi configurado, retorna o padrão (desativado).
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MousetrapResponse"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        /**
+         * Salva a configuração do mousetrap.
+         * @description Regras: ativar exige um canal de texto do servidor; `byTenure` exige `minTenureDays`;
+         *     `sendDm` exige `dmMessage`. O bot aplica a nova configuração em até 30 s.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            /** @description Token de cancelamento. */
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UpdateMousetrapRequest"];
+                    "text/json": components["schemas"]["UpdateMousetrapRequest"];
+                    "application/*+json": components["schemas"]["UpdateMousetrapRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["MousetrapResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/status": {
         parameters: {
             query?: never;
@@ -324,11 +639,16 @@ export interface paths {
         };
         /**
          * Slash commands do bot.
-         * @description Lista de comandos registrados no Discord, em ordem alfabética.
+         * @description Comandos registrados no Discord, em ordem alfabética, com parâmetros, escolhas e se são só
+         *     para servidores. Com locale (ex.: `pt-BR`), as descrições vêm traduzidas
+         *     quando o bot registrou a tradução; senão, em inglês.
          */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    /** @description Idioma das descrições (ex.: `en`, `pt-BR`). */
+                    locale?: string;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -377,10 +697,104 @@ export interface components {
             /** @description Mensagem legível, segura para exibir ao usuário. */
             message: string;
         };
+        /** @description Parâmetro (ou subcomando) de um slash command. */
+        CommandOptionResponse: {
+            /** @description Nome do parâmetro. */
+            name: string;
+            /** @description Descrição no idioma pedido, ou a padrão. */
+            description: string;
+            /** @description Tipo: subcommand, subcommand-group, string, integer, boolean, user, channel, role, mentionable, number, attachment. */
+            type: string;
+            /** @description Obrigatório ao usar o comando. */
+            required: boolean;
+            /** @description Valores fixos aceitos (vazio = livre). */
+            choices: string[];
+            /** @description Parâmetros do subcomando (vazio para parâmetros comuns). */
+            options: components["schemas"]["CommandOptionResponse"][];
+        };
         /** @description Slash command do bot. */
         CommandResponse: {
+            /** @description Nome do comando (sem a barra). */
             name: string;
+            /** @description Descrição no idioma pedido, ou a padrão (inglês) se não houver tradução. */
             description: string;
+            /** @description O comando só funciona dentro de servidores (não em DMs). */
+            guildOnly: boolean;
+            /** @description Parâmetros e subcomandos, na ordem do Discord. */
+            options: components["schemas"]["CommandOptionResponse"][];
+        };
+        /** @description Canal de texto da guild (para seletores do dashboard). */
+        GuildChannelResponse: {
+            /** @description ID do canal. */
+            id: string;
+            /** @description Nome (sem #). */
+            name: string;
+            /** @description Categoria em que está, se houver. */
+            category: null | string;
+        };
+        /** @description Visão geral de um servidor (dados do Discord + configurações do Bangboo). */
+        GuildOverviewResponse: {
+            /** @description ID da guild. */
+            id: string;
+            /** @description Nome. */
+            name: string;
+            /** @description Ícone, se houver. */
+            iconUrl: null | string;
+            /** @description Banner, se houver. */
+            bannerUrl: null | string;
+            /** @description Descrição pública (servidores da comunidade). */
+            description: null | string;
+            /** @description ID do dono. */
+            ownerId: string;
+            /**
+             * Format: date-time
+             * @description Data de criação (derivada do ID).
+             */
+            createdAt: string;
+            /**
+             * Format: int32
+             * @description Total aproximado de membros.
+             */
+            memberCount: number;
+            /**
+             * Format: int32
+             * @description Total aproximado de membros online.
+             */
+            onlineCount: number;
+            /**
+             * Format: int32
+             * @description Nível de impulso (0–3).
+             */
+            boostTier: number;
+            /**
+             * Format: int32
+             * @description Quantidade de impulsos.
+             */
+            boostCount: number;
+            /**
+             * Format: int32
+             * @description Canais de texto e anúncios.
+             */
+            textChannelCount: number;
+            /**
+             * Format: int32
+             * @description Canais de voz e palco.
+             */
+            voiceChannelCount: number;
+            /**
+             * Format: int32
+             * @description Categorias.
+             */
+            categoryCount: number;
+            /**
+             * Format: int32
+             * @description Cargos (sem contar @everyone).
+             */
+            roleCount: number;
+            /** @description Idioma principal do servidor (ex.: `pt-BR`). */
+            preferredLocale: null | string;
+            /** @description Configuração atual do mousetrap. */
+            mousetrap: components["schemas"]["MousetrapResponse"];
         };
         /** @description Guild que o usuário pode gerenciar. */
         GuildResponse: {
@@ -406,6 +820,28 @@ export interface components {
              * @description Total aproximado de membros online.
              */
             approximatePresenceCount: number;
+        };
+        /** @enum {unknown} */
+        MousetrapAction: "ban" | "kick" | "byTenure";
+        /** @description Configuração do mousetrap (canal-armadilha) de um servidor. */
+        MousetrapResponse: {
+            /** @description Ativo. */
+            enabled: boolean;
+            /** @description Canal vigiado (null se ainda não configurado). */
+            channelId: null | string;
+            /** @description Nome do canal, se ele ainda existir. */
+            channelName: null | string;
+            /** @description Punição: `ban`, `kick` (bane e desbane, apagando as mensagens) ou `byTenure`. */
+            action: components["schemas"]["MousetrapAction"];
+            /**
+             * Format: int32
+             * @description Para `byTenure`: dias no servidor a partir dos quais o membro é expulso em vez de banido.
+             */
+            minTenureDays: null | number;
+            /** @description Envia uma mensagem ao usuário antes da punição. */
+            sendDm: boolean;
+            /** @description Texto da mensagem; aceita `{user}` e `{server}`. */
+            dmMessage: null | string;
         };
         /** @description Estado atual do bot. */
         StatusResponse: {
@@ -436,6 +872,24 @@ export interface components {
              * @description Último heartbeat (null se nunca reportou).
              */
             updatedAt: null | string;
+        };
+        /** @description Atualiza a configuração do mousetrap. */
+        UpdateMousetrapRequest: {
+            /** @description Ativo. Exige string? UpdateMousetrapRequest.ChannelId. */
+            enabled?: boolean;
+            /** @description Canal de texto vigiado. */
+            channelId?: null | string;
+            /** @description Punição aplicada. */
+            action?: components["schemas"]["MousetrapAction"];
+            /**
+             * Format: int32
+             * @description Obrigatório para `byTenure`.
+             */
+            minTenureDays?: null | number;
+            /** @description Envia string? UpdateMousetrapRequest.DmMessage antes da punição. */
+            sendDm?: boolean;
+            /** @description Obrigatório quando bool UpdateMousetrapRequest.SendDm. Aceita `{user}` e `{server}`. */
+            dmMessage?: null | string;
         };
         /** @description Usuário logado no dashboard. */
         UserResponse: {

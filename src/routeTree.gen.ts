@@ -22,7 +22,10 @@ import { Route as Char123LocaleChar125PublicCommandsRouteImport } from './routes
 import { Route as Char123LocaleChar125PublicStatusRouteImport } from './routes/{-$locale}/_public/status'
 import { Route as Char123LocaleChar125PrivateGuildGuildRouteImport } from './routes/{-$locale}/_private/_guild/guild'
 import { Route as Char123LocaleChar125PrivateDashboardIndexRouteImport } from './routes/{-$locale}/_private/dashboard/index'
-import { Route as Char123LocaleChar125PrivateDashboardOverviewRouteImport } from './routes/{-$locale}/_private/dashboard/overview'
+import { Route as Char123LocaleChar125PrivateDashboardGuildIdRouteRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/route'
+import { Route as Char123LocaleChar125PrivateDashboardGuildIdIndexRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/index'
+import { Route as Char123LocaleChar125PrivateDashboardGuildIdMousetrapRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/mousetrap'
+import { Route as Char123LocaleChar125PrivateDashboardGuildIdOverviewRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/overview'
 
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
@@ -96,11 +99,29 @@ const Char123LocaleChar125PrivateDashboardIndexRoute =
     path: '/',
     getParentRoute: () => Char123LocaleChar125PrivateDashboardRouteRoute,
   } as any)
-const Char123LocaleChar125PrivateDashboardOverviewRoute =
-  Char123LocaleChar125PrivateDashboardOverviewRouteImport.update({
+const Char123LocaleChar125PrivateDashboardGuildIdRouteRoute =
+  Char123LocaleChar125PrivateDashboardGuildIdRouteRouteImport.update({
+    id: '/$guildId',
+    path: '/$guildId',
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardGuildIdIndexRoute =
+  Char123LocaleChar125PrivateDashboardGuildIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardGuildIdRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute =
+  Char123LocaleChar125PrivateDashboardGuildIdMousetrapRouteImport.update({
+    id: '/mousetrap',
+    path: '/mousetrap',
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardGuildIdRouteRoute,
+  } as any)
+const Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute =
+  Char123LocaleChar125PrivateDashboardGuildIdOverviewRouteImport.update({
     id: '/overview',
     path: '/overview',
-    getParentRoute: () => Char123LocaleChar125PrivateDashboardRouteRoute,
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardGuildIdRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -112,9 +133,12 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/commands': typeof Char123LocaleChar125PublicCommandsRoute
   '/{-$locale}/status': typeof Char123LocaleChar125PublicStatusRoute
   '/{-$locale}/': typeof Char123LocaleChar125PublicIndexRoute
+  '/{-$locale}/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren
   '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
-  '/{-$locale}/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
   '/{-$locale}/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
+  '/{-$locale}/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
+  '/{-$locale}/dashboard/$guildId/': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/{-$locale}': typeof Char123LocaleChar125PublicIndexRoute
@@ -124,8 +148,10 @@ export interface FileRoutesByTo {
   '/{-$locale}/commands': typeof Char123LocaleChar125PublicCommandsRoute
   '/{-$locale}/status': typeof Char123LocaleChar125PublicStatusRoute
   '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
-  '/{-$locale}/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
   '/{-$locale}/dashboard': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
+  '/{-$locale}/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
+  '/{-$locale}/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,9 +166,12 @@ export interface FileRoutesById {
   '/{-$locale}/_public/commands': typeof Char123LocaleChar125PublicCommandsRoute
   '/{-$locale}/_public/status': typeof Char123LocaleChar125PublicStatusRoute
   '/{-$locale}/_public/': typeof Char123LocaleChar125PublicIndexRoute
+  '/{-$locale}/_private/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren
   '/{-$locale}/_private/_guild/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
-  '/{-$locale}/_private/dashboard/overview': typeof Char123LocaleChar125PrivateDashboardOverviewRoute
   '/{-$locale}/_private/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/_private/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
+  '/{-$locale}/_private/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
+  '/{-$locale}/_private/dashboard/$guildId/': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -155,9 +184,12 @@ export interface FileRouteTypes {
     | '/{-$locale}/commands'
     | '/{-$locale}/status'
     | '/{-$locale}/'
+    | '/{-$locale}/dashboard/$guildId'
     | '/{-$locale}/guild'
-    | '/{-$locale}/dashboard/overview'
     | '/{-$locale}/dashboard/'
+    | '/{-$locale}/dashboard/$guildId/mousetrap'
+    | '/{-$locale}/dashboard/$guildId/overview'
+    | '/{-$locale}/dashboard/$guildId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/{-$locale}'
@@ -167,8 +199,10 @@ export interface FileRouteTypes {
     | '/{-$locale}/commands'
     | '/{-$locale}/status'
     | '/{-$locale}/guild'
-    | '/{-$locale}/dashboard/overview'
     | '/{-$locale}/dashboard'
+    | '/{-$locale}/dashboard/$guildId/mousetrap'
+    | '/{-$locale}/dashboard/$guildId/overview'
+    | '/{-$locale}/dashboard/$guildId'
   id:
     | '__root__'
     | '/{-$locale}'
@@ -182,9 +216,12 @@ export interface FileRouteTypes {
     | '/{-$locale}/_public/commands'
     | '/{-$locale}/_public/status'
     | '/{-$locale}/_public/'
+    | '/{-$locale}/_private/dashboard/$guildId'
     | '/{-$locale}/_private/_guild/guild'
-    | '/{-$locale}/_private/dashboard/overview'
     | '/{-$locale}/_private/dashboard/'
+    | '/{-$locale}/_private/dashboard/$guildId/mousetrap'
+    | '/{-$locale}/_private/dashboard/$guildId/overview'
+    | '/{-$locale}/_private/dashboard/$guildId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -287,12 +324,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardIndexRouteImport
       parentRoute: typeof Char123LocaleChar125PrivateDashboardRouteRoute
     }
-    '/{-$locale}/_private/dashboard/overview': {
-      id: '/{-$locale}/_private/dashboard/overview'
-      path: '/overview'
-      fullPath: '/{-$locale}/dashboard/overview'
-      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardOverviewRouteImport
+    '/{-$locale}/_private/dashboard/$guildId': {
+      id: '/{-$locale}/_private/dashboard/$guildId'
+      path: '/$guildId'
+      fullPath: '/{-$locale}/dashboard/$guildId'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteImport
       parentRoute: typeof Char123LocaleChar125PrivateDashboardRouteRoute
+    }
+    '/{-$locale}/_private/dashboard/$guildId/': {
+      id: '/{-$locale}/_private/dashboard/$guildId/'
+      path: '/'
+      fullPath: '/{-$locale}/dashboard/$guildId/'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRoute
+    }
+    '/{-$locale}/_private/dashboard/$guildId/mousetrap': {
+      id: '/{-$locale}/_private/dashboard/$guildId/mousetrap'
+      path: '/mousetrap'
+      fullPath: '/{-$locale}/dashboard/$guildId/mousetrap'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRoute
+    }
+    '/{-$locale}/_private/dashboard/$guildId/overview': {
+      id: '/{-$locale}/_private/dashboard/$guildId/overview'
+      path: '/overview'
+      fullPath: '/{-$locale}/dashboard/$guildId/overview'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRoute
     }
   }
 }
@@ -312,15 +370,36 @@ const Char123LocaleChar125PrivateGuildRouteRouteWithChildren =
     Char123LocaleChar125PrivateGuildRouteRouteChildren,
   )
 
+interface Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren {
+  Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
+  Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
+  Char123LocaleChar125PrivateDashboardGuildIdIndexRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
+}
+
+const Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren: Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren =
+  {
+    Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute:
+      Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute,
+    Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute:
+      Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute,
+    Char123LocaleChar125PrivateDashboardGuildIdIndexRoute:
+      Char123LocaleChar125PrivateDashboardGuildIdIndexRoute,
+  }
+
+const Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren =
+  Char123LocaleChar125PrivateDashboardGuildIdRouteRoute._addFileChildren(
+    Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren,
+  )
+
 interface Char123LocaleChar125PrivateDashboardRouteRouteChildren {
-  Char123LocaleChar125PrivateDashboardOverviewRoute: typeof Char123LocaleChar125PrivateDashboardOverviewRoute
+  Char123LocaleChar125PrivateDashboardGuildIdRouteRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren
   Char123LocaleChar125PrivateDashboardIndexRoute: typeof Char123LocaleChar125PrivateDashboardIndexRoute
 }
 
 const Char123LocaleChar125PrivateDashboardRouteRouteChildren: Char123LocaleChar125PrivateDashboardRouteRouteChildren =
   {
-    Char123LocaleChar125PrivateDashboardOverviewRoute:
-      Char123LocaleChar125PrivateDashboardOverviewRoute,
+    Char123LocaleChar125PrivateDashboardGuildIdRouteRoute:
+      Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren,
     Char123LocaleChar125PrivateDashboardIndexRoute:
       Char123LocaleChar125PrivateDashboardIndexRoute,
   }

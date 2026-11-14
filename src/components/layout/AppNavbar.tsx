@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { useIntlayer } from "react-intlayer";
 import { AuthControls } from "#/features/auth/components/AuthControls";
+import { cn } from "#/lib/utils";
 import { BrandLink } from "./BrandLink";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { MobileNav } from "./MobileNav";
@@ -30,7 +31,13 @@ function NavbarShell({ center, actions }: NavbarShellProps) {
 		<>
 			<SkipToContent />
 			<header className="sticky top-0 z-50 w-full border-b border-yellow-600/15 bg-linear-to-tr from-[color-mix(in_oklab,var(--color-yellow-800),black_60%)]/90 to-black/90 shadow-lg shadow-yellow-600/10 backdrop-blur-md supports-[backdrop-filter]:from-[color-mix(in_oklab,var(--color-yellow-800),black_60%)]/75 supports-[backdrop-filter]:to-black/75">
-				<div className="mx-auto grid h-14 w-full max-w-5xl grid-cols-[1fr_auto] items-center px-3 md:grid-cols-[1fr_auto_1fr]">
+				{/* 3 colunas só quando há menu central; sem ele, idioma/perfil ficam à direita. */}
+				<div
+					className={cn(
+						"mx-auto grid h-14 w-full max-w-5xl grid-cols-[1fr_auto] items-center px-3",
+						center && "md:grid-cols-[1fr_auto_1fr]",
+					)}
+				>
 					<div className="flex items-center">
 						<BrandLink />
 					</div>

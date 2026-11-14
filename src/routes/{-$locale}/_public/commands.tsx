@@ -12,7 +12,8 @@ import { commandsQuery } from "#/features/commands/queries";
 import { pageSeo, routeLocale } from "#/lib/seo/seo";
 
 export const Route = createFileRoute("/{-$locale}/_public/commands")({
-	loader: ({ context }) => context.queryClient.prefetchQuery(commandsQuery()),
+	loader: ({ context, params }) =>
+		context.queryClient.prefetchQuery(commandsQuery(routeLocale(params))),
 	head: ({ params }) => {
 		const locale = routeLocale(params);
 		const seo = getIntlayer("seo", locale);

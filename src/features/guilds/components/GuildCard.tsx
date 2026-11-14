@@ -53,7 +53,8 @@ function GuildAction({ guild }: GuildCardProps) {
 	if (guild.isBotMember) {
 		return (
 			<LocalizedLink
-				to="/dashboard/overview"
+				to="/dashboard/$guildId/overview"
+				params={{ guildId: guild.id }}
 				className={cn(buttonVariants({ size: "lg" }), actionClassName)}
 			>
 				{content.manage}

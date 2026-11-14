@@ -26,3 +26,29 @@ export const guildQuery = (guildId: string) =>
 			),
 		staleTime: 30_000,
 	});
+
+/** Visão geral do servidor (dados do Discord vistos pelo bot + configurações). */
+export const guildOverviewQuery = (guildId: string) =>
+	queryOptions({
+		queryKey: [...guildKeys.detail(guildId), "overview"] as const,
+		queryFn: () =>
+			unwrap(
+				getApiClient().GET("/api/guilds/{guildId}/overview", {
+					params: { path: { guildId } },
+				}),
+			),
+		staleTime: 30_000,
+	});
+
+/** Canais de texto do servidor, na ordem do Discord (para seletores). */
+export const guildChannelsQuery = (guildId: string) =>
+	queryOptions({
+		queryKey: [...guildKeys.detail(guildId), "channels"] as const,
+		queryFn: () =>
+			unwrap(
+				getApiClient().GET("/api/guilds/{guildId}/channels", {
+					params: { path: { guildId } },
+				}),
+			),
+		staleTime: 30_000,
+	});

@@ -30,9 +30,48 @@ export const fixtures = {
 		updatedAt: "2026-11-13T12:00:00Z",
 	} satisfies Schemas["StatusResponse"],
 	commands: [
-		{ name: "fab", description: "Show the fab menu" },
-		{ name: "profile", description: "Show a member profile" },
-		{ name: "social", description: "Social links" },
+		{
+			name: "fab",
+			description: "Show the fab menu",
+			guildOnly: false,
+			options: [],
+		},
+		{
+			name: "moderate",
+			description: "Moderation actions",
+			guildOnly: true,
+			options: [
+				{
+					name: "action",
+					description: "What to do",
+					type: "string",
+					required: true,
+					choices: ["delete message", "timeout", "kick", "ban", "unban"],
+					options: [],
+				},
+			],
+		},
+		{
+			name: "profile",
+			description: "Show a member profile",
+			guildOnly: true,
+			options: [
+				{
+					name: "user",
+					description: "Selected user",
+					type: "user",
+					required: false,
+					choices: [],
+					options: [],
+				},
+			],
+		},
+		{
+			name: "social",
+			description: "Social links",
+			guildOnly: false,
+			options: [],
+		},
 	] satisfies Schemas["CommandResponse"][],
 	guilds: [
 		{
@@ -58,6 +97,53 @@ export const fixtures = {
 	] satisfies Schemas["GuildResponse"][],
 };
 
+/** Servidor usado nos testes do painel (o bot está nele). */
+export const GUILD_ID = "10";
+
+export const guildFixtures = {
+	mousetrap: {
+		enabled: false,
+		channelId: null,
+		channelName: null,
+		action: "ban",
+		minTenureDays: null,
+		sendDm: false,
+		dmMessage: null,
+	} satisfies Schemas["MousetrapResponse"],
+	channels: [
+		{ id: "100", name: "rules", category: null },
+		{ id: "101", name: "dont-type-here", category: "Moderation" },
+		{ id: "102", name: "general", category: "Chat" },
+	] satisfies Schemas["GuildChannelResponse"][],
+	overview: {
+		id: "10",
+		name: "Bot Guild",
+		iconUrl: null,
+		bannerUrl: null,
+		description: "A friendly server",
+		ownerId: "999",
+		createdAt: "2020-05-01T12:00:00Z",
+		memberCount: 1234,
+		onlineCount: 321,
+		boostTier: 2,
+		boostCount: 9,
+		textChannelCount: 12,
+		voiceChannelCount: 4,
+		categoryCount: 3,
+		roleCount: 15,
+		preferredLocale: "pt-BR",
+		mousetrap: {
+			enabled: true,
+			channelId: "101",
+			channelName: "dont-type-here",
+			action: "byTenure",
+			minTenureDays: 30,
+			sendDm: true,
+			dmMessage: "Hi {user}",
+		},
+	} satisfies Schemas["GuildOverviewResponse"],
+};
+
 /** Respostas de sucesso padrão. */
 export const handlers = [
 	http.get(apiUrl("/api/auth/me"), () => HttpResponse.json(fixtures.user)),
@@ -70,4 +156,13 @@ export const handlers = [
 		HttpResponse.json(fixtures.commands),
 	),
 	http.get(apiUrl("/api/guilds"), () => HttpResponse.json(fixtures.guilds)),
+	http.get(apiUrl(`/api/guilds/${GUILD_ID}/overview`), () =>
+		HttpResponse.json(guildFixtures.overview),
+	),
+	http.get(apiUrl(`/api/guilds/${GUILD_ID}/channels`), () =>
+		HttpResponse.json(guildFixtures.channels),
+	),
+	http.get(apiUrl(`/api/guilds/${GUILD_ID}/mousetrap`), () =>
+		HttpResponse.json(guildFixtures.mousetrap),
+	),
 ];

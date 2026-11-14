@@ -7,12 +7,17 @@ const names = (search: string) =>
 
 describe("filterCommands", () => {
 	it("returns everything for an empty search", () => {
-		expect(names("  ")).toEqual(["fab", "profile", "social"]);
+		expect(names("  ")).toEqual(["fab", "moderate", "profile", "social"]);
 	});
 
 	it("matches name or description, case-insensitive", () => {
 		expect(names("PROFILE")).toEqual(["profile"]);
 		expect(names("links")).toEqual(["social"]);
+	});
+
+	it("matches parameter names", () => {
+		expect(names("action")).toEqual(["moderate"]);
+		expect(names("user")).toEqual(["profile"]);
 	});
 
 	it("ignores a leading slash", () => {

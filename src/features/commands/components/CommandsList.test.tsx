@@ -28,6 +28,63 @@ describe("CommandsList", () => {
 		expect(screen.getByText("/profile")).toBeInTheDocument();
 	});
 
+	it("shows how many commands there are and which are servers-only", async () => {
+		renderList();
+
+		expect(
+			await screen.findByText("Showing 4 of 4 commands"),
+		).toBeInTheDocument();
+		// moderate e profile são só para servidores
+		expect(screen.getAllByText(text.guildOnly)).toHaveLength(2);
+	});
+
+	it("expands a command to show its parameters and choices", async () => {
+		renderList();
+
+		await userEvent.click(await screen.findByText("/moderate"));
+
+		expect(await screen.findByText("action")).toBeInTheDocument();
+		expect(screen.getByText(text.required)).toBeInTheDocument();
+		expect(screen.getByText(text.types.string)).toBeInTheDocument();
+		for (const choice of [
+			"delete message",
+			"timeout",
+			"kick",
+			"ban",
+			"unban",
+		]) {
+			expect(screen.getByText(choice)).toBeInTheDocument();
+		}
+	});
+
+	it("says when a command has no parameters", async () => {
+		renderList();
+
+		await userEvent.click(await screen.findByText("/fab"));
+
+		expect(await screen.findByText(text.noParameters)).toBeInTheDocument();
+	});
+
+	it("sends the site language to the API", async () => {
+		let requestedLocale: string | null = null;
+		server.use(
+			http.get(apiUrl("/api/status/commands"), ({ request }) => {
+				requestedLocale = new URL(request.url).searchParams.get("locale");
+				return HttpResponse.json(fixtures.commands);
+			}),
+		);
+
+		renderWithProviders(
+			<QueryBoundary loading={<p>loading</p>}>
+				<CommandsList search="" />
+			</QueryBoundary>,
+			{ locale: "pt-BR" },
+		);
+
+		expect(await screen.findByText("/fab")).toBeInTheDocument();
+		expect(requestedLocale).toBe("pt-BR");
+	});
+
 	it("filters by the search term", async () => {
 		renderList("social");
 

@@ -27,7 +27,7 @@ describe("GuildGrid", () => {
 		expect(screen.getByText("Other Guild")).toBeInTheDocument();
 		expect(screen.getByRole("link", { name: text.manage })).toHaveAttribute(
 			"href",
-			"/dashboard/overview",
+			"/dashboard/10/overview",
 		);
 	});
 

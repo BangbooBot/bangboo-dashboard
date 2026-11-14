@@ -31,7 +31,8 @@ src/
     __root.tsx            carrega `user` no context (currentUserQuery → GET /api/auth/me)
     {-$locale}/           segmento opcional de idioma (`/commands` = en, `/pt-BR/commands`); valida o prefixo
       _public/            layout público (AppNavbar + AppFooter): index, commands, status
-      _private/           guard de login + noindex; _guild/ (seleção de guild) e dashboard/ (sidebar)
+      _private/           guard de login + noindex; _guild/guild (seleção de servidor) e
+                          dashboard/$guildId/{overview,mousetrap} (painel com sidebar; `dashboard/` volta para /guild)
     sitemap[.]xml.ts      /sitemap.xml com alternates hreflang
     robots[.]txt.ts       /robots.txt (bloqueia áreas privadas, aponta o sitemap)
     api/$.ts              proxy /api/* → API C#
@@ -210,6 +211,7 @@ bun run api:sync     # atualiza openapi/ e src/types/api.ts
 
 ## 12. Dívidas conhecidas
 
-- `dashboard/overview` é um placeholder. O `GuildSwitcher` ainda não seleciona guild nem existe rota `_private/dashboard/$guildId`. Quando existir, use `guildQuery(guildId)` e deixe a API responder 403.
+- Páginas novas do painel de um servidor ficam em `dashboard/$guildId/` + item em `DashboardSidebar` (`pages`). Use `GuildErrorFallback` no `QueryBoundary`: 404 da API = bot fora do servidor (mostra o convite). Links com `LocalizedLink to="/dashboard/$guildId/..." params={{ guildId }}`.
+- Formulários de configuração seguem `features/mousetrap`: `schemas.ts` (zod com mensagens traduzidas + `toFormValues`/`toRequest`), componentes de campo só apresentacionais e um `XxxForm` que liga TanStack Form + mutation.
 - Componentes de `components/ui` sem uso (calendar, carousel, chart...) vieram do template e podem ser removidos.
 - Idiomas: `en` (padrão, sem prefixo) e `pt-BR`. Para adicionar um idioma: `intlayer.config.ts` + a tradução em todos os `*.content.ts`.
