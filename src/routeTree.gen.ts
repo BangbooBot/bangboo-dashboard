@@ -24,6 +24,7 @@ import { Route as Char123LocaleChar125PrivateGuildGuildRouteImport } from './rou
 import { Route as Char123LocaleChar125PrivateDashboardIndexRouteImport } from './routes/{-$locale}/_private/dashboard/index'
 import { Route as Char123LocaleChar125PrivateDashboardGuildIdRouteRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/route'
 import { Route as Char123LocaleChar125PrivateDashboardGuildIdIndexRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/index'
+import { Route as Char123LocaleChar125PrivateDashboardGuildIdModerationRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/moderation'
 import { Route as Char123LocaleChar125PrivateDashboardGuildIdMousetrapRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/mousetrap'
 import { Route as Char123LocaleChar125PrivateDashboardGuildIdOverviewRouteImport } from './routes/{-$locale}/_private/dashboard/$guildId/overview'
 
@@ -111,6 +112,12 @@ const Char123LocaleChar125PrivateDashboardGuildIdIndexRoute =
     path: '/',
     getParentRoute: () => Char123LocaleChar125PrivateDashboardGuildIdRouteRoute,
   } as any)
+const Char123LocaleChar125PrivateDashboardGuildIdModerationRoute =
+  Char123LocaleChar125PrivateDashboardGuildIdModerationRouteImport.update({
+    id: '/moderation',
+    path: '/moderation',
+    getParentRoute: () => Char123LocaleChar125PrivateDashboardGuildIdRouteRoute,
+  } as any)
 const Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute =
   Char123LocaleChar125PrivateDashboardGuildIdMousetrapRouteImport.update({
     id: '/mousetrap',
@@ -136,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/{-$locale}/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren
   '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
   '/{-$locale}/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/dashboard/$guildId/moderation': typeof Char123LocaleChar125PrivateDashboardGuildIdModerationRoute
   '/{-$locale}/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
   '/{-$locale}/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
   '/{-$locale}/dashboard/$guildId/': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
@@ -149,6 +157,7 @@ export interface FileRoutesByTo {
   '/{-$locale}/status': typeof Char123LocaleChar125PublicStatusRoute
   '/{-$locale}/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
   '/{-$locale}/dashboard': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/dashboard/$guildId/moderation': typeof Char123LocaleChar125PrivateDashboardGuildIdModerationRoute
   '/{-$locale}/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
   '/{-$locale}/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
   '/{-$locale}/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
@@ -169,6 +178,7 @@ export interface FileRoutesById {
   '/{-$locale}/_private/dashboard/$guildId': typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRouteWithChildren
   '/{-$locale}/_private/_guild/guild': typeof Char123LocaleChar125PrivateGuildGuildRoute
   '/{-$locale}/_private/dashboard/': typeof Char123LocaleChar125PrivateDashboardIndexRoute
+  '/{-$locale}/_private/dashboard/$guildId/moderation': typeof Char123LocaleChar125PrivateDashboardGuildIdModerationRoute
   '/{-$locale}/_private/dashboard/$guildId/mousetrap': typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
   '/{-$locale}/_private/dashboard/$guildId/overview': typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
   '/{-$locale}/_private/dashboard/$guildId/': typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/dashboard/$guildId'
     | '/{-$locale}/guild'
     | '/{-$locale}/dashboard/'
+    | '/{-$locale}/dashboard/$guildId/moderation'
     | '/{-$locale}/dashboard/$guildId/mousetrap'
     | '/{-$locale}/dashboard/$guildId/overview'
     | '/{-$locale}/dashboard/$guildId/'
@@ -200,6 +211,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/status'
     | '/{-$locale}/guild'
     | '/{-$locale}/dashboard'
+    | '/{-$locale}/dashboard/$guildId/moderation'
     | '/{-$locale}/dashboard/$guildId/mousetrap'
     | '/{-$locale}/dashboard/$guildId/overview'
     | '/{-$locale}/dashboard/$guildId'
@@ -219,6 +231,7 @@ export interface FileRouteTypes {
     | '/{-$locale}/_private/dashboard/$guildId'
     | '/{-$locale}/_private/_guild/guild'
     | '/{-$locale}/_private/dashboard/'
+    | '/{-$locale}/_private/dashboard/$guildId/moderation'
     | '/{-$locale}/_private/dashboard/$guildId/mousetrap'
     | '/{-$locale}/_private/dashboard/$guildId/overview'
     | '/{-$locale}/_private/dashboard/$guildId/'
@@ -338,6 +351,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRouteImport
       parentRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRoute
     }
+    '/{-$locale}/_private/dashboard/$guildId/moderation': {
+      id: '/{-$locale}/_private/dashboard/$guildId/moderation'
+      path: '/moderation'
+      fullPath: '/{-$locale}/dashboard/$guildId/moderation'
+      preLoaderRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdModerationRouteImport
+      parentRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdRouteRoute
+    }
     '/{-$locale}/_private/dashboard/$guildId/mousetrap': {
       id: '/{-$locale}/_private/dashboard/$guildId/mousetrap'
       path: '/mousetrap'
@@ -371,6 +391,7 @@ const Char123LocaleChar125PrivateGuildRouteRouteWithChildren =
   )
 
 interface Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren {
+  Char123LocaleChar125PrivateDashboardGuildIdModerationRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdModerationRoute
   Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute
   Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute
   Char123LocaleChar125PrivateDashboardGuildIdIndexRoute: typeof Char123LocaleChar125PrivateDashboardGuildIdIndexRoute
@@ -378,6 +399,8 @@ interface Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren {
 
 const Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren: Char123LocaleChar125PrivateDashboardGuildIdRouteRouteChildren =
   {
+    Char123LocaleChar125PrivateDashboardGuildIdModerationRoute:
+      Char123LocaleChar125PrivateDashboardGuildIdModerationRoute,
     Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute:
       Char123LocaleChar125PrivateDashboardGuildIdMousetrapRoute,
     Char123LocaleChar125PrivateDashboardGuildIdOverviewRoute:

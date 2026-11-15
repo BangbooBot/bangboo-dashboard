@@ -424,6 +424,241 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/guilds/{guildId}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cargos do servidor.
+         * @description Cargos que podem ser dados a membros (sem @everyone e sem cargos de bot), do mais alto para o mais baixo. 404 se o bot não estiver no servidor.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["GuildRoleResponse"][];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/guilds/{guildId}/moderation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Cargos que podem usar o comando /moderate.
+         * @description O dono e quem tem Administrador sempre podem, mesmo sem cargo listado. 404 se o bot não estiver no servidor.
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ModerationResponse"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        /**
+         * Define os cargos que podem usar o comando /moderate.
+         * @description Substitui a lista atual. Só cargos atribuíveis (sem @everyone e sem cargos de bot), até 25.
+         *     O bot aplica a mudança em até 30 s.
+         */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description ID da guild no Discord. */
+                    guildId: string;
+                };
+                cookie?: never;
+            };
+            /** @description Token de cancelamento. */
+            requestBody: {
+                content: {
+                    "application/json": components["schemas"]["UpdateModerationRequest"];
+                    "text/json": components["schemas"]["UpdateModerationRequest"];
+                    "application/*+json": components["schemas"]["UpdateModerationRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ModerationResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Unauthorized */
+                401: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Forbidden */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+                /** @description Bad Gateway */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["ApiError"];
+                    };
+                };
+            };
+        };
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/guilds/{guildId}/mousetrap": {
         parameters: {
             query?: never;
@@ -821,6 +1056,23 @@ export interface components {
              */
             approximatePresenceCount: number;
         };
+        /** @description Cargo atribuível da guild (para seletores do dashboard). */
+        GuildRoleResponse: {
+            /** @description ID do cargo. */
+            id: string;
+            /** @description Nome. */
+            name: string;
+            /**
+             * Format: int32
+             * @description Cor em RGB inteiro (0 = sem cor).
+             */
+            color: number;
+        };
+        /** @description Quem pode usar o comando `/moderate`. */
+        ModerationResponse: {
+            /** @description Cargos liberados. O dono e administradores sempre podem. */
+            roleIds: string[];
+        };
         /** @enum {unknown} */
         MousetrapAction: "ban" | "kick" | "byTenure";
         /** @description Configuração do mousetrap (canal-armadilha) de um servidor. */
@@ -872,6 +1124,11 @@ export interface components {
              * @description Último heartbeat (null se nunca reportou).
              */
             updatedAt: null | string;
+        };
+        /** @description Novos cargos que podem usar o comando `/moderate` (substitui a lista atual). */
+        UpdateModerationRequest: {
+            /** @description IDs de cargos atribuíveis da guild (até 25). */
+            roleIds: string[];
         };
         /** @description Atualiza a configuração do mousetrap. */
         UpdateMousetrapRequest: {

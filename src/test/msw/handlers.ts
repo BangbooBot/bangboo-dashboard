@@ -115,6 +115,12 @@ export const guildFixtures = {
 		{ id: "101", name: "dont-type-here", category: "Moderation" },
 		{ id: "102", name: "general", category: "Chat" },
 	] satisfies Schemas["GuildChannelResponse"][],
+	roles: [
+		{ id: "30", name: "Mods", color: 0xe91e63 },
+		{ id: "40", name: "Helpers", color: 0x3498db },
+		{ id: "20", name: "Members", color: 0 },
+	] satisfies Schemas["GuildRoleResponse"][],
+	moderation: { roleIds: ["30"] } satisfies Schemas["ModerationResponse"],
 	overview: {
 		id: "10",
 		name: "Bot Guild",
@@ -164,5 +170,11 @@ export const handlers = [
 	),
 	http.get(apiUrl(`/api/guilds/${GUILD_ID}/mousetrap`), () =>
 		HttpResponse.json(guildFixtures.mousetrap),
+	),
+	http.get(apiUrl(`/api/guilds/${GUILD_ID}/roles`), () =>
+		HttpResponse.json(guildFixtures.roles),
+	),
+	http.get(apiUrl(`/api/guilds/${GUILD_ID}/moderation`), () =>
+		HttpResponse.json(guildFixtures.moderation),
 	),
 ];

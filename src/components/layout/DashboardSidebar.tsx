@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { LayoutDashboard, MousePointerClick } from "lucide-react";
+import { Gavel, LayoutDashboard, MousePointerClick } from "lucide-react";
 import { useIntlayer } from "react-intlayer";
 import { LocalizedLink } from "#/components/shared/LocalizedLink";
 import {
@@ -16,18 +16,40 @@ import {
 import { GuildSwitcher } from "#/features/guilds/components/GuildSwitcher";
 import type { LocalizedPath } from "#/lib/i18n";
 
-const pages = [
+type SidebarPage = {
+	to: LocalizedPath;
+	key: "overview" | "mousetrap" | "moderation";
+	icon: typeof LayoutDashboard;
+};
+
+/** Páginas do painel agrupadas por assunto (a chave do grupo é o rótulo em `dashboard.sidebar`). */
+const groups = [
 	{
-		to: "/dashboard/$guildId/overview",
-		key: "overview",
-		icon: LayoutDashboard,
+		key: "general",
+		pages: [
+			{
+				to: "/dashboard/$guildId/overview",
+				key: "overview",
+				icon: LayoutDashboard,
+			},
+		],
 	},
 	{
-		to: "/dashboard/$guildId/mousetrap",
-		key: "mousetrap",
-		icon: MousePointerClick,
+		key: "security",
+		pages: [
+			{
+				to: "/dashboard/$guildId/mousetrap",
+				key: "mousetrap",
+				icon: MousePointerClick,
+			},
+			{
+				to: "/dashboard/$guildId/moderation",
+				key: "moderation",
+				icon: Gavel,
+			},
+		],
 	},
-] as const satisfies { to: LocalizedPath; key: string; icon: unknown }[];
+] as const satisfies { key: string; pages: SidebarPage[] }[];
 
 /** Barra lateral do painel: servidor atual e páginas de configuração. */
 export function DashboardSidebar() {
@@ -45,32 +67,36 @@ export function DashboardSidebar() {
 			</SidebarHeader>
 			{guildId && (
 				<SidebarContent>
-					<SidebarGroup>
-						<SidebarGroupLabel>{content.sidebar.settings}</SidebarGroupLabel>
-						<SidebarGroupContent>
-							<SidebarMenu>
-								{pages.map(({ to, key, icon: Icon }) => (
-									<SidebarMenuItem key={key}>
-										<SidebarMenuButton
-											render={
-												<LocalizedLink
-													to={to}
-													params={{ guildId }}
-													activeProps={{
-														"data-active": true,
-														"aria-current": "page",
-													}}
-												/>
-											}
-										>
-											<Icon />
-											<span>{content.sidebar[key]}</span>
-										</SidebarMenuButton>
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					</SidebarGroup>
+					{groups.map((group) => (
+						<SidebarGroup key={group.key}>
+							<SidebarGroupLabel>
+								{content.sidebar[group.key]}
+							</SidebarGroupLabel>
+							<SidebarGroupContent>
+								<SidebarMenu>
+									{group.pages.map(({ to, key, icon: Icon }) => (
+										<SidebarMenuItem key={key}>
+											<SidebarMenuButton
+												render={
+													<LocalizedLink
+														to={to}
+														params={{ guildId }}
+														activeProps={{
+															"data-active": true,
+															"aria-current": "page",
+														}}
+													/>
+												}
+											>
+												<Icon />
+												<span>{content.sidebar[key]}</span>
+											</SidebarMenuButton>
+										</SidebarMenuItem>
+									))}
+								</SidebarMenu>
+							</SidebarGroupContent>
+						</SidebarGroup>
+					))}
 				</SidebarContent>
 			)}
 		</Sidebar>

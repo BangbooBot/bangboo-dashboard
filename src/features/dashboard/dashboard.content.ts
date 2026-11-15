@@ -5,12 +5,11 @@ const dashboardContent = {
 	key: "dashboard",
 	content: {
 		sidebar: {
-			settings: t({
-				en: "Server settings",
-				"pt-BR": "Configurações do servidor",
-			}),
+			general: t({ en: "General", "pt-BR": "Geral" }),
+			security: t({ en: "Security", "pt-BR": "Segurança" }),
 			overview: t({ en: "Overview", "pt-BR": "Visão geral" }),
 			mousetrap: t({ en: "Mousetrap", "pt-BR": "Mousetrap" }),
+			moderation: t({ en: "Moderation", "pt-BR": "Moderação" }),
 			allServers: t({ en: "All servers", "pt-BR": "Todos os servidores" }),
 		},
 		overview: {

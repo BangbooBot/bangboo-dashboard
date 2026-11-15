@@ -52,3 +52,16 @@ export const guildChannelsQuery = (guildId: string) =>
 			),
 		staleTime: 30_000,
 	});
+
+/** Cargos atribuíveis do servidor, do mais alto para o mais baixo (sem @everyone e cargos de bot). */
+export const guildRolesQuery = (guildId: string) =>
+	queryOptions({
+		queryKey: [...guildKeys.detail(guildId), "roles"] as const,
+		queryFn: () =>
+			unwrap(
+				getApiClient().GET("/api/guilds/{guildId}/roles", {
+					params: { path: { guildId } },
+				}),
+			),
+		staleTime: 30_000,
+	});
